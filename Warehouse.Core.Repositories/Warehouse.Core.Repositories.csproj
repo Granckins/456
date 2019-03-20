@@ -5,10 +5,10 @@
     <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{200AD4BD-FBBB-46D8-B691-8271AB09A546}</ProjectGuid>
+    <ProjectGuid>{0925A074-BF73-459D-BE01-DAC9FED65902}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Warehouse.Model</RootNamespace>
-    <AssemblyName>Warehouse.Model</AssemblyName>
+    <RootNamespace>Warehouse.Core.Repositories</RootNamespace>
+    <AssemblyName>Warehouse.Core.Repositories</AssemblyName>
     <DefaultLanguage>ru-RU</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -33,12 +33,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="project.json" />
     <!-- A reference to the entire .NET Framework is automatically included -->
+    <ProjectReference Include="..\Warehouse.Core\Warehouse.Core.csproj">
+      <Project>{ab9248d1-36c9-40d4-b12c-aaeb550009e9}</Project>
+      <Name>Warehouse.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Warehouse.Model\Warehouse.Model.csproj">
+      <Project>{200AD4BD-FBBB-46D8-B691-8271AB09A546}</Project>
+      <Name>Warehouse.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="User.cs" />
-    <Compile Include="UserIdentity.cs" />
+    <Compile Include="WarehouseRequestsRepositoryUnits.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

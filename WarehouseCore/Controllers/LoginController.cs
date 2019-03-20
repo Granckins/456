@@ -62,7 +62,7 @@ namespace WarehouseCore.Controllers
 
             //Validate the User Credentials 
             //Demo Purpose, I have Passed HardCoded User Information 
-            if (login.Username == "Jignesh")
+            if (login.Username != "")
             {
                 user = new UserModel { Username = "Jignesh Trivedi"  };
             }
