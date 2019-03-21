@@ -24,6 +24,7 @@
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="5.4.0" />
     <PackageReference Include="Microsoft.Net.Compilers" Version="2.10.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.4.0" />
   </ItemGroup>
 
@@ -35,6 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\app-routing.module.ts" />
     <None Remove="ClientApp\src\app\Interceptor\errorInterceptor.ts" />
     <None Remove="ClientApp\src\app\Interceptor\httpInterceptor.ts" />
     <None Remove="ClientApp\src\app\Login\login.component.ts" />
@@ -43,11 +45,20 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WarehouseRequestsRepositoryUnits\WarehouseRequestsRepositoryUnits.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\app-routing.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\Interceptor\errorInterceptor.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\Interceptor\httpInterceptor.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\Login\login.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\Services\authentication.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\Services\authorizationCheck.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ClientApp\src\fonts\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

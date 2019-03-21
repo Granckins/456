@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Warehouse.Core.Repositories;
 using WarehouseCore.Model;
 
 namespace WarehouseCore.Controllers
@@ -13,8 +14,11 @@ namespace WarehouseCore.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [AllowAnonymous]
+
     public class LoginController : ControllerBase
     {
+        WarehouseRequestsRepositoryUnits Repository = new WarehouseRequestsRepositoryUnits();
+
         private IConfiguration _config;
 
         public LoginController(IConfiguration config)
@@ -59,12 +63,12 @@ namespace WarehouseCore.Controllers
         private UserModel AuthenticateUser(UserModel login)
         {
             UserModel user = null;
-
+          var d= Repository.GetUserIdentityByName(login.Username, login.Password);
             //Validate the User Credentials 
             //Demo Purpose, I have Passed HardCoded User Information 
-            if (login.Username != "")
+            if (d.UserId!= "000000000000000000000000")
             {
-                user = new UserModel { Username = "Jignesh Trivedi"  };
+                user = new UserModel { Username = d.Name  };
             }
             return user;
         }

@@ -1,7 +1,51 @@
-<body>
-  <app-nav-menu></app-nav-menu>
-  <div class="container">
-    <router-outlet></router-outlet>
+
+
+   
+  <div>
+    <mat-toolbar color="primary"><mat-toolbar-row>
+  <div fxShow="true" fxHide.gt-sm="true">
+    <button mat-icon-button (click)="sidenav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
   </div>
-</body>
+
+   
+    <span>Учет МТЦ</span> 
+  <span class="example-spacer"></span>
+  <div fxShow="true" fxHide.lt-md="true">
+    <button mat-icon-button routerLink="/home">
+      <mat-icon aria-label="Example icon-button with a heart icon">format_list_numbered</mat-icon>
+    </button>
+    <button mat-icon-button routerLink="/home">
+      <mat-icon aria-label="Example icon-button with a heart icon">update</mat-icon>
+    </button>
+
+  </div>
+</mat-toolbar-row>
+</mat-toolbar>
  
+    <mat-sidenav-container fxFlexFill class="example-container">
+
+      <mat-sidenav color="primary" #sidenav fxLayout="column" mode="over" opened="false" fxHide.gt-sm="true">
+        <div fxLayout="column">
+         
+          <mat-list role="list">
+            <mat-list-item role="listitem">
+              <button mat-icon-button routerLink="/home">
+                <mat-icon aria-label="Example icon-button with a heart icon">format_list_numbered</mat-icon>
+
+              </button>&nbsp;Работа с данными
+            </mat-list-item>
+             
+          </mat-list>
+        </div>
+      </mat-sidenav>
+      <mat-sidenav-content fxFlexFill>
+
+        <div class="mat-app-background basic-container">
+          <router-outlet></router-outlet>
+        </div>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </div>
+

@@ -1,11 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks; 
-namespace Warehouse.Model
-{
+using System.ComponentModel.DataAnnotations;
 
+namespace Warehouse.Model.Db
+{
     public class User
     {
         public User()
@@ -57,8 +56,7 @@ namespace Warehouse.Model
 
         public string GetRoles()
         {
-            var rolesDict = Loaders.Roles.GetInstance().List;
-            return Roles != null ? String.Join(",", Roles.Select(r => rolesDict[r])) : "";
+            return "";
         }
     }
 }

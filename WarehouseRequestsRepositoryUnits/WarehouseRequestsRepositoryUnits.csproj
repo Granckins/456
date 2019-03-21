@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\IRepositoryRequestsUnits\IRepositoryRequestsUnits.csproj" />
+    <ProjectReference Include="..\Warehouse.Model.Db\Warehouse.Model.Db.csproj" />
+    <ProjectReference Include="..\Warehouse.Model\Warehouse.Model.csproj" />
+  </ItemGroup>
+
+</Project>
