@@ -15,10 +15,7 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-
-
  
-
 
 
 
