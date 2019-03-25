@@ -108,6 +108,88 @@ namespace Warehouse.Core.Repositories
             else
                 return new UserIdentity { UserId = "000000000000000000000000" };
         }
+        public List<EventCouch> GetFilterSortDocuments(int page = 1, int limit = 10, bool archive = false, FilterSort FS = null)
+        {
+            List<EventCouch> list = new List<EventCouch>();
+            var skip = (page - 1) * limit;
+            var q = "";
+            var sort = "";
+
+            if (FS != null)
+            {
+                foreach (var qq in FS.Filters)
+                {
+                    if (qq.value == "Наименование")
+                        qq.value = "Наименование_изделия";
+                    if (qq.value != "")
+                        if (qq.value.Contains("-"))
+                            q += qq.name.Replace(" ", "_") + ":" + qq.value + "^1 AND ";
+                        else
+                            q += qq.name.Replace(" ", "_") + ":" + qq.value + "*^1 AND ";
+                }
+
+                q += "archive:" + archive.ToString().ToLower();
+                int sq = 0;
+                if (FS.Sorts.Count > 0 && FS.Sorts[0].name != "Дата приёма" && FS.Sorts[0].name != "Дата выдачи")
+                {
+                    sort = "&sort=";
+                    var qs = FS.Sorts[0];
+                    if (qs.name == "Номер упаковки" || qs.name == "Количество")
+                    {
+                        if (qs.value == "1")
+                            sort += "/" + qs.name.Replace(" ", "_") + "<int>";
+                        else
+                            sort += "\\" + qs.name.Replace(" ", "_") + "<int>";
+                    }
+                    if (qs.name == "Наименование изделия" || qs.name == "Заводской номер" || qs.name == "Обозначение" || qs.name == "Местонахождение на складе" || qs.name == "Система" || qs.name == "Ответственный" || qs.name == "Принадлежность")
+                    {
+                        if (qs.value == "1")
+                            sort += "/" + qs.name.Replace(" ", "_");
+                        else
+                            sort += "\\" + qs.name.Replace(" ", "_");
+                    }
+                }
+            }
+            else
+            {
+                q += "archive:" + archive.ToString().ToLower();
+            }
+            var url = "http://localhost:5984/_fti/local/events/_design/searchdocuments/by_fields?q=" + q + sort + "&skip=" + skip + "&limit=" + limit;
+            var request = (HttpWebRequest)WebRequest.Create(url);
+
+            request.Credentials = new NetworkCredential("admin", "root");
+            var response = request.GetResponse();
+
+            var user = new User();
+            var lucene1 = new LuceneRequest<EventCouch>();
+            lucene1.rows = new List<Row<EventCouch>>();
+            using (var responseStream = response.GetResponseStream())
+            {
+                var reader = new StreamReader(responseStream, Encoding.UTF8);
+                var res = reader.ReadToEnd();
+                var lucene = JsonConvert.DeserializeObject<LuceneRequest<EventWar>>(res);
+
+                foreach (var l in lucene.rows)
+                {
+                  
+                    EventCouch ev = new EventCouch();
+                    ev = EventManager.ConvertEventWarToEventCouchParent(l.fields);
+     
+
+                    lucene1.rows.Add(new Row<EventCouch>() { id = l.id, fields = ev });
+                }
+
+ 
+                foreach (var r in lucene1.rows)
+                {
+                   list.Add( r.fields  );
+                }
+         
+            }
+            return list;
+
+        }
+
         public void Dispose()
         {
 

@@ -68,7 +68,8 @@ import { LoginComponent } from './Login/login.component';
 import { httpInterceptor } from './Interceptor/httpInterceptor';
 import { ErrorInterceptor } from './Interceptor/errorInterceptor';
 
-import { AuthorizationCheck } from './Services/authorizationCheck';
+import { AuthorizationCheck } from './Services/authorizationCheck'; 
+import { DataSetService } from './Services/home.service';
 import { AuthenticationService } from './Services/authentication.service';
 @NgModule({
   declarations: [
@@ -135,7 +136,7 @@ import { AuthenticationService } from './Services/authentication.service';
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: httpInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    AuthorizationCheck, AuthenticationService],
+    AuthorizationCheck, AuthenticationService, DataSetService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
