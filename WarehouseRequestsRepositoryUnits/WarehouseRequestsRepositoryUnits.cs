@@ -108,9 +108,10 @@ namespace Warehouse.Core.Repositories
             else
                 return new UserIdentity { UserId = "000000000000000000000000" };
         }
-        public List<EventCouch> GetFilterSortDocuments(int page = 1, int limit = 10, bool archive = false, FilterSort FS = null)
+        public CouchRequest<EventCouch> GetFilterSortDocuments(int page = 1, int limit = 10, bool archive = false, FilterSort FS = null)
         {
-            List<EventCouch> list = new List<EventCouch>();
+            CouchRequest<EventCouch> list = new CouchRequest<EventCouch>();
+            limit = 100;
             var skip = (page - 1) * limit;
             var q = "";
             var sort = "";
@@ -178,11 +179,13 @@ namespace Warehouse.Core.Repositories
 
                     lucene1.rows.Add(new Row<EventCouch>() { id = l.id, fields = ev });
                 }
+                list.total_rows = lucene.total_rows;
+           
 
- 
                 foreach (var r in lucene1.rows)
                 {
-                   list.Add( r.fields  );
+                   list.rows.Add( r.fields  );
+                    list.rows.Last()._id = r.id;
                 }
          
             }

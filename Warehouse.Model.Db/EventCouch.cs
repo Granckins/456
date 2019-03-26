@@ -13,15 +13,15 @@ namespace Warehouse.Model.Db
         public string _rev { get; set; }
         [JsonProperty("_id")]
         public string _id { get; set; }
-        [JsonProperty("Номер_упаковки")]
+        [JsonProperty("Nomer_upakovki")]
         public int Nomer_upakovki { get; set; }
-        [JsonProperty("Наименование_изделия")]
+        [JsonProperty("Naimenovanie_izdeliya")]
         public string Naimenovanie_izdeliya { get; set; }
-        [JsonProperty("Заводской_номер")]
+        [JsonProperty("Zavodskoj_nomer")]
         public string Zavodskoj_nomer { get; set; }
-        [JsonProperty("Количество")]
+        [JsonProperty("Kolichestvo")]
         public int Kolichestvo { get; set; }
-        [JsonProperty("Обозначение")]
+        [JsonProperty("Oboznachenie")]
         public string Oboznachenie { get; set; } 
         [JsonProperty("Система")]
         public string Sistema { get; set; }
@@ -32,7 +32,7 @@ namespace Warehouse.Model.Db
         public float Stoimost { get; set; }
         [JsonProperty("Ответственный")]
         public string Otvetstvennyj { get; set; }
-        [JsonProperty("Местонахождение_на_складе")]
+        [JsonProperty("Mestonahozhdenie_na_sklade")]
         public string Mestonahozhdenie_na_sklade { get; set; }
         [JsonProperty("Вес_брутто")]
         public float Ves_brutto { get; set; }

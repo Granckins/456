@@ -10,8 +10,8 @@ export class DataSetService {
 
   constructor(private http: HttpClient) { }
 
-  getUser(): Observable<EventCouch[]> {
-    return this.http.get<EventCouch[]>('api/Data/FilterSortDocument');
+  getUser(): Observable<CouchRequest<EventCouch>> {
+    return this.http.get<CouchRequest<EventCouch>>('api/Data/FilterSortDocument');
   }
 
 }

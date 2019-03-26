@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 import { DataSetService } from '../Services/home.service';
 
-import { RowCouch, EventCouch } from '../Models/home.model';
+import { CouchRequest, EventCouch } from '../Models/home.model';
 import { MatSort } from '@angular/material'; 
 
 @Component({
@@ -13,7 +13,7 @@ import { MatSort } from '@angular/material';
 export class HomeComponent implements OnInit {
 
   
-  displayedColumns: string[] = ['_rev'];
+  displayedColumns: string[] = ['Nomer_upakovki', 'Naimenovanie_izdeliya', 'Zavodskoj_nomer', 'Kolichestvo','Mestonahozhdenie_na_sklade' ];
   dataSource = new MatTableDataSource<EventCouch>();
 
   constructor(public dataService: DataSetService) { }
@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit {
     this.dataService.getUser()
       .subscribe(
         res => { 
-          this.dataSource.data= res;
+          this.dataSource.data= res.rows;
          
         },
         error => {

@@ -14,10 +14,10 @@ namespace WarehouseCore.Controllers
     {
         WarehouseRequestsRepositoryUnits Repository = new WarehouseRequestsRepositoryUnits();
         [HttpGet("[action]")]
-        public List<EventCouch> FilterSortDocument( )
+        public CouchRequest<EventCouch> FilterSortDocument( )
         {
             var FS = new FilterSort();
-            var res1 = new List<EventCouch>();
+            var res1 = new CouchRequest<EventCouch>();
             
 
 

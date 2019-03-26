@@ -40,7 +40,7 @@ export class EventCouch  {
 }
 
 
- export class RowCouch<Obj>
+ export class RowCouch 
 {
  id: string;
     key: string;
@@ -54,19 +54,20 @@ export class EventCouch  {
  datevd: string;
 
   limit: number;
-  bool: boolean;
-  value: Obj;
+  bool: boolean; 
 }
 class CouchRequestClass<Obj>  implements CouchRequest <Obj> {
   total_rows: number;
   offset: number;
-  rows: Array<RowCouch<Obj>> = new Array();
+  row: RowCouch; 
+  rows: Array<Obj> = new Array();
 }
 
 export interface CouchRequest<Obj>
 {
   total_rows: number;
   offset: number;
-  rows: Array<RowCouch<Obj>>;
+  row: RowCouch; 
+  rows: Array<Obj>;
   
     }

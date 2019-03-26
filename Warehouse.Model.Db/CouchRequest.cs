@@ -5,7 +5,7 @@ using System.Text;
 namespace Warehouse.Model.Db
 {
 
-    public class RowCouch<Obj>
+    public class RowCouch
     {
         public string id { get; set; }
         public string key { get; set; }
@@ -20,7 +20,7 @@ namespace Warehouse.Model.Db
 
         public int limit { get; set; }
         public bool archive_str { get; set; }
-        public Obj value { get; set; }
+    
 
     }
 
@@ -28,15 +28,12 @@ namespace Warehouse.Model.Db
     {
         public int total_rows { get; set; }
         public int offset { get; set; }
-        public List<RowCouch<Obj>> rows { get; set; }
-        public List<Obj> ToEventCouch()
+        public RowCouch row { get; set; }
+        public List<Obj> rows { get; set; }
+        public CouchRequest()
         {
-            var list = new List<Obj>();
-            foreach (var r in this.rows)
-            {
-                list.Add(r.value);
-            }
-            return list;
+            rows = new List<Obj>();
+
         }
     }
     public class CouchRequestMultiKey<Obj>
