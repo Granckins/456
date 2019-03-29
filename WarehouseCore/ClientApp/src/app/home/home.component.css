@@ -37,10 +37,16 @@ table {
 }
 
 .cdk-drag-placeholder {
-  opacity: 0;
+  
 }
 
 .cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+
+ 
+.cdk-drop-list-dragging .mat-row:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
@@ -50,4 +56,109 @@ table {
 
 .example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+
+.table-header-rotated td {
+  width: auto;
+  vertical-align: middle;
+  text-align: center;
+}
+
+ 
+.table-header-rotated th.rotate-45 {
+  height: 100px;
+  width: 40px;
+  min-width: 100px;
+  max-width: 40px;
+  position: relative;
+  vertical-align: middle;
+  text-align: center;
+  padding: 0;
+  font-size: 12px;
+  line-height: 0.8;
+  white-space: inherit !important;
+}
+
+  .table-header-rotated th.rotate-45 > div {
+    position: relative;
+    top: 0px;
+    left: 40px; /* 80 * tan(45) / 2 = 40 where 80 is the height on the cell and 45 is the transform angle*/
+    height: 100%;
+    -ms-transform: skew(-45deg,0deg);
+    -moz-transform: skew(-45deg,0deg);
+    -webkit-transform: skew(-45deg,0deg);
+    -o-transform: skew(-45deg,0deg);
+    transform: skew(-45deg,0deg);
+    overflow: hidden;
+    border-left: 1px solid #dddddd;
+    border-right: 1px solid #dddddd;
+  }
+
+  .table-header-rotated th.rotate-45 span {
+    -ms-transform: skew(45deg,0deg) rotate(315deg);
+    -moz-transform: skew(45deg,0deg) rotate(315deg);
+    -webkit-transform: skew(45deg,0deg) rotate(315deg);
+    -o-transform: skew(45deg,0deg) rotate(315deg);
+    transform: skew(45deg,0deg) rotate(315deg);
+    position: absolute;
+    bottom: 30px; /* 40 cos(45) = 28 with an additional 2px margin*/
+    left: -25px; /*Because it looked good, but there is probably a mathematical link here as well*/
+    display: inline-block;
+    /*// width: 100%;*/
+    width: 85px; /* 80 / cos(45) - 40 cos (45) = 85 where 80 is the height of the cell, 40 the width of the cell and 45 the transform angle*/
+    text-align: left;
+    white-space: inherit !important;
+    /*// white-space: nowrap;whether to display in one line or not*/
+  }
+
+
+
+
+
+tr.example-detail-row {
+  height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: #f5f5f5;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+.example-element-diagram {
+  min-width: 80px;
+  border: 2px solid black;
+  padding: 8px;
+  font-weight: lighter;
+  margin: 8px 0;
+  height: 104px;
+}
+
+.example-element-symbol {
+  font-weight: bold;
+  font-size: 40px;
+  line-height: normal;
+}
+
+.example-element-description {
+  padding: 16px;
+}
+
+.example-element-description-attribution {
+  opacity: 0.5;
+}
+.example-row {
+  cursor: pointer;
 }

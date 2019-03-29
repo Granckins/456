@@ -23,43 +23,43 @@ namespace Warehouse.Model.Db
         public int Kolichestvo { get; set; }
         [JsonProperty("Oboznachenie")]
         public string Oboznachenie { get; set; } 
-        [JsonProperty("Система")]
+        [JsonProperty("Sistema")]
         public string Sistema { get; set; }
-        [JsonProperty("Принадлежность")]
+        [JsonProperty("Prinadlezhnost")]
         public string Prinadlezhnost { get; set; }
 
-        [JsonProperty("Стоимость")]
+        [JsonProperty("Stoimost")]
         public float Stoimost { get; set; }
-        [JsonProperty("Ответственный")]
+        [JsonProperty("Otvetstvennyj")]
         public string Otvetstvennyj { get; set; }
         [JsonProperty("Mestonahozhdenie_na_sklade")]
         public string Mestonahozhdenie_na_sklade { get; set; }
-        [JsonProperty("Вес_брутто")]
+        [JsonProperty("Ves_brutto")]
         public float Ves_brutto { get; set; }
-        [JsonProperty("Вес_нетто")]
+        [JsonProperty("Ves_netto")]
         public float Ves_netto { get; set; }
-        [JsonProperty("Длина")]
+        [JsonProperty("Dlina")]
         public float Dlina { get; set; }
-        [JsonProperty("Ширина")]
+        [JsonProperty("Shirina")]
         public float Shirina { get; set; }
-        [JsonProperty("Высота")]
+        [JsonProperty("Vysota")]
         public float Vysota { get; set; }
 
-        [JsonProperty("Дата_приёма")]
+        [JsonProperty("Data_priyoma")]
         public DateTime? Data_priyoma { get; set; }
-        [JsonProperty("Откуда")]
+        [JsonProperty("Otkuda")]
         public string Otkuda { get; set; }
-        [JsonProperty("Дата_выдачи")]
+        [JsonProperty("Data_vydachi")]
         public DateTime? Data_vydachi { get; set; }
-        [JsonProperty("Куда")]
+        [JsonProperty("Kuda")]
         public string Kuda { get; set; }
-        [JsonProperty("Номер_пломбы")]
+        [JsonProperty("Nomer_plomby")]
         public string Nomer_plomby { get; set; }
-        [JsonProperty("Примечание")]
+        [JsonProperty("Primechanie")]
         public string Primechanie { get; set; }
-        [JsonProperty("Добавил")]
+        [JsonProperty("Dobavil")]
         public string Dobavil { get; set; }
-        [JsonProperty("Дата_изменения")]
+        [JsonProperty("Data_ismenen")]
         public DateTime Data_ismenen { get; set; }
         public List<RevsInfo> _revs_info { get; set; }
         public EventCouch()

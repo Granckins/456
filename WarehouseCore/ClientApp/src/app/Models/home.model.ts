@@ -33,9 +33,9 @@ export class EventCouch  {
   Dobavil: string;
   Data_ismenen: Data;
   _revs_info: Array<RevsInfo> = new Array();
-
+  expand:boolean;
   constructor() {
-
+    expand = false;
   }
 }
 
