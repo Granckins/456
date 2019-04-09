@@ -14,7 +14,7 @@ namespace WarehouseCore.Controllers
     {
         WarehouseRequestsRepositoryUnits Repository = new WarehouseRequestsRepositoryUnits();
         [HttpGet("[action]")]
-        public CouchRequest<EventCouch> FilterSortDocument( )
+        public CouchRequest<EventCouch> FilterSortDocument(string sort  , string order  ,int page  )
         {
             var FS = new FilterSort();
             var res1 = new CouchRequest<EventCouch>();

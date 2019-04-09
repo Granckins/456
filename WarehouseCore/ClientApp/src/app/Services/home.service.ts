@@ -10,8 +10,11 @@ export class DataSetService {
 
   constructor(private http: HttpClient) { }
 
-  getUser(): Observable<CouchRequest<EventCouch>> {
-    return this.http.get<CouchRequest<EventCouch>>('api/Data/FilterSortDocument');
+  getUser(sort: string, order: string, page: number): Observable<CouchRequest<EventCouch>> {
+    const href = 'api/Data/FilterSortDocument';
+    const requestUrl =
+      `${href}?sort=${sort}&order=${order}&page=${page + 1}`;
+    return this.http.get<CouchRequest<EventCouch>>(requestUrl);
   }
 
 }

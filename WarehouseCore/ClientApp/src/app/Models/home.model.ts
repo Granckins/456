@@ -35,7 +35,7 @@ export class EventCouch  {
   _revs_info: Array<RevsInfo> = new Array();
   expand:boolean;
   constructor() {
-    expand = false;
+    this.expand = false;
   }
 }
 

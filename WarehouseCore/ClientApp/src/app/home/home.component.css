@@ -28,92 +28,11 @@ table {
 }
 
 
- 
 
-.cdk-drag-preview {
-  box-sizing: border-box;
-  border-radius: 4px;
-  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
 }
-
-.cdk-drag-placeholder {
-  
-}
-
-.cdk-drag-animating {
-  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-}
-
-
- 
-.cdk-drop-list-dragging .mat-row:not(.cdk-drag-placeholder) {
-  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-}
-
-.example-box:last-child {
-  border: none;
-}
-
-.example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
-  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-}
-
-
-.table-header-rotated td {
-  width: auto;
-  vertical-align: middle;
-  text-align: center;
-}
-
- 
-.table-header-rotated th.rotate-45 {
-  height: 100px;
-  width: 40px;
-  min-width: 100px;
-  max-width: 40px;
-  position: relative;
-  vertical-align: middle;
-  text-align: center;
-  padding: 0;
-  font-size: 12px;
-  line-height: 0.8;
-  white-space: inherit !important;
-}
-
-  .table-header-rotated th.rotate-45 > div {
-    position: relative;
-    top: 0px;
-    left: 40px; /* 80 * tan(45) / 2 = 40 where 80 is the height on the cell and 45 is the transform angle*/
-    height: 100%;
-    -ms-transform: skew(-45deg,0deg);
-    -moz-transform: skew(-45deg,0deg);
-    -webkit-transform: skew(-45deg,0deg);
-    -o-transform: skew(-45deg,0deg);
-    transform: skew(-45deg,0deg);
-    overflow: hidden;
-    border-left: 1px solid #dddddd;
-    border-right: 1px solid #dddddd;
-  }
-
-  .table-header-rotated th.rotate-45 span {
-    -ms-transform: skew(45deg,0deg) rotate(315deg);
-    -moz-transform: skew(45deg,0deg) rotate(315deg);
-    -webkit-transform: skew(45deg,0deg) rotate(315deg);
-    -o-transform: skew(45deg,0deg) rotate(315deg);
-    transform: skew(45deg,0deg) rotate(315deg);
-    position: absolute;
-    bottom: 30px; /* 40 cos(45) = 28 with an additional 2px margin*/
-    left: -25px; /*Because it looked good, but there is probably a mathematical link here as well*/
-    display: inline-block;
-    /*// width: 100%;*/
-    width: 85px; /* 80 / cos(45) - 40 cos (45) = 85 where 80 is the height of the cell, 40 the width of the cell and 45 the transform angle*/
-    text-align: left;
-    white-space: inherit !important;
-    /*// white-space: nowrap;whether to display in one line or not*/
-  }
-
-
-
 
 
 tr.example-detail-row {
@@ -161,4 +80,25 @@ tr.example-element-row:not(.example-expanded-row):active {
 }
 .example-row {
   cursor: pointer;
+}
+
+
+
+.example-loading-shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 56px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.example-rate-limit-reached {
+  color: #980000;
+  max-width: 360px;
+  text-align: center;
 }
