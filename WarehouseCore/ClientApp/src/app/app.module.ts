@@ -1,3 +1,4 @@
+ 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -14,9 +15,8 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
  
-
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';  
 
 
 
@@ -124,7 +124,7 @@ import { AuthenticationService } from './Services/authentication.service';
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule,
-    MatTreeModule,
+    MatTreeModule,     
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full', canActivate: [AuthorizationCheck] },
       { path: 'home', component: HomeComponent, pathMatch: 'full', canActivate: [AuthorizationCheck] },

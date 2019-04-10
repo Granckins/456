@@ -81,6 +81,9 @@ tr.example-element-row:not(.example-expanded-row):active {
 .example-row {
   cursor: pointer;
 }
+.example-chip-list {
+  width: 100%;
+}
 
 
 
