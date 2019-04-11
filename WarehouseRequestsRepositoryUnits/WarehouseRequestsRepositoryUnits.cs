@@ -108,54 +108,42 @@ namespace Warehouse.Core.Repositories
             else
                 return new UserIdentity { UserId = "000000000000000000000000" };
         }
-        public CouchRequest<EventCouch> GetFilterSortDocuments(int page = 1, int limit = 10, bool archive = false, FilterSort FS = null)
+        public CouchRequest<EventCouch> GetFilterSortDocuments(string filter="", int pagesize=10, string sort="Номер_упаковки", string order="", int page=0)
         {
             CouchRequest<EventCouch> list = new CouchRequest<EventCouch>();
-            limit = 100;
-            var skip = (page - 1) * limit;
+          var  limit = pagesize;
+            var skip = (page ) * limit;
+            if (filter == null)
+                filter = "";
             var q = "";
-            var sort = "";
-
-            if (FS != null)
+            if (filter != "")
             {
-                foreach (var qq in FS.Filters)
-                {
-                    if (qq.value == "Наименование")
-                        qq.value = "Наименование_изделия";
-                    if (qq.value != "")
-                        if (qq.value.Contains("-"))
-                            q += qq.name.Replace(" ", "_") + ":" + qq.value + "^1 AND ";
-                        else
-                            q += qq.name.Replace(" ", "_") + ":" + qq.value + "*^1 AND ";
-                }
-
-                q += "archive:" + archive.ToString().ToLower();
-                int sq = 0;
-                if (FS.Sorts.Count > 0 && FS.Sorts[0].name != "Дата приёма" && FS.Sorts[0].name != "Дата выдачи")
-                {
-                    sort = "&sort=";
-                    var qs = FS.Sorts[0];
-                    if (qs.name == "Номер упаковки" || qs.name == "Количество")
-                    {
-                        if (qs.value == "1")
-                            sort += "/" + qs.name.Replace(" ", "_") + "<int>";
-                        else
-                            sort += "\\" + qs.name.Replace(" ", "_") + "<int>";
-                    }
-                    if (qs.name == "Наименование изделия" || qs.name == "Заводской номер" || qs.name == "Обозначение" || qs.name == "Местонахождение на складе" || qs.name == "Система" || qs.name == "Ответственный" || qs.name == "Принадлежность")
-                    {
-                        if (qs.value == "1")
-                            sort += "/" + qs.name.Replace(" ", "_");
-                        else
-                            sort += "\\" + qs.name.Replace(" ", "_");
-                    }
-                }
+                q ="( "+filter + " ) AND archive:false ";
             }
             else
             {
-                q += "archive:" + archive.ToString().ToLower();
+                q = "archive:false  ";
             }
-            var url = "http://localhost:5984/_fti/local/events/_design/searchdocuments/by_fields?q=" + q + sort + "&skip=" + skip + "&limit=" + limit;
+            var sort1 = "&sort="; 
+                    if (sort== "Номер_упаковки" || sort == "Количество")
+                    {
+                         if (order!="desc")
+                         sort1 += "/" +sort+ "<int>";
+                         else
+                            sort1 += "\\" +sort + "<int>";
+                    }
+            else
+            {
+                if (order != "desc")
+                      sort1 += "/" + sort;
+                    else
+                    sort1 += "\\" +sort;
+            }
+                    
+            
+         
+           
+            var url = "http://localhost:5984/_fti/local/events/_design/searchdocuments/by_fields?q=" + q + sort1 + "&skip=" + skip + "&limit=" + limit;
             var request = (HttpWebRequest)WebRequest.Create(url);
 
             request.Credentials = new NetworkCredential("admin", "root");

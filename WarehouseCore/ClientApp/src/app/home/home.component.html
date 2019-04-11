@@ -67,10 +67,10 @@
                   [selectable]="selectable"
                   [removable]="removable"
                   (removed)="remove(fruit)"
-                  [ngStyle]="Balanced?{    'background-color': '#e0e0e0'} : {'background-color': '#dc3545'}">
+                  [ngStyle]=" isOkChip()?{    'background-color': '#e0e0e0'} : {'background-color': '#dc3545'}">
           <span matPrefix> {{fruit.name}}</span>
           <span matPrefix *ngIf="condition(fruit.name)">:&nbsp;</span>
-          <input style="width: min-content;" *ngIf="condition(fruit.name)" matInput>
+          <input style="width: min-content;" *ngIf="condition(fruit.name)" matInput   (change)="onChange($event, fruit.id)">
 
           <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
         </mat-chip>
@@ -79,31 +79,31 @@
 
         <table mat-table [dataSource]="data" multiTemplateDataRows
                class="example-table" cdkDropList #table1="cdkDropList"
-               matSort matSortActive="created" matSortDisableClear matSortDirection="desc">
+               matSort matSortActive="Номер_упаковки" matSortDisableClear matSortDirection="desc">
 
           <ng-container matColumnDef="Nomer_upakovki">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> <div><span>Nomer upakovki</span></div> </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="Номер_упаковки" disableClear> <div><span>Номер упаковки</span></div> </th>
 
-            <td mat-cell *matCellDef="let element">         {{element.Nomer_upakovki}} </td>
+            <td mat-cell *matCellDef="let element">  {{element.Nomer_upakovki}} </td>
           </ng-container>
 
 
           <!-- Name Column -->
           <ng-container matColumnDef="Naimenovanie_izdeliya">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header><div><span> Naimenovanie izdeliya</span></div> </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="Наименование_изделия"><div><span>Наименование изделия</span></div> </th>
             <td mat-cell *matCellDef="let element"> {{element.Naimenovanie_izdeliya}} </td>
           </ng-container>
           <!-- Name Column -->
           <ng-container matColumnDef="Zavodskoj_nomer">
-            <th class="rotate" mat-header-cell mat-sort-header *matHeaderCellDef> <div><span>Zavodskoj nomer</span></div> </th>
+            <th class="rotate" mat-header-cell mat-sort-header="Заводской_номер" *matHeaderCellDef> <div><span>Заводской номер</span></div> </th>
             <td mat-cell *matCellDef="let element"> {{element.Zavodskoj_nomer}} </td>
           </ng-container>
           <ng-container matColumnDef="Kolichestvo">
-            <th class="rotate" mat-header-cell mat-sort-header *matHeaderCellDef> <div><span>Kolichestvo </span></div></th>
+            <th class="rotate" mat-header-cell mat-sort-header="Количество" *matHeaderCellDef> <div><span>Количество </span></div></th>
             <td mat-cell *matCellDef="let element"> {{element.Kolichestvo}} </td>
           </ng-container>
           <ng-container matColumnDef="Mestonahozhdenie_na_sklade">
-            <th class="rotate" mat-header-cell *matHeaderCellDef mat-sort-header> <div><span>Mestonahozhdenie na sklade</span></div> </th>
+            <th class="rotate" mat-header-cell *matHeaderCellDef mat-sort-header="Местонахождение_на_складе"> <div><span>Местонахождение</span></div> </th>
             <td mat-cell *matCellDef="let element"> {{element.Mestonahozhdenie_na_sklade}} </td>
           </ng-container>
           <ng-container matColumnDef="Oboznachenie">
@@ -204,7 +204,7 @@
 
 
       </div>
-      <mat-paginator [length]="resultsLength" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+      <mat-paginator [length]="resultsLength"  [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 
     </mat-expansion-panel>
   </mat-accordion>

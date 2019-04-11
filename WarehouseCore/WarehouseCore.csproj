@@ -42,6 +42,7 @@
     <None Remove="ClientApp\src\app\Login\login.component.ts" />
     <None Remove="ClientApp\src\app\Models\home.model.ts" />
     <None Remove="ClientApp\src\app\polyfills.ts" />
+    <None Remove="ClientApp\src\app\rus-paginator-intl.ts" />
     <None Remove="ClientApp\src\app\Services\authentication.service.ts" />
     <None Remove="ClientApp\src\app\Services\authorizationCheck.ts" />
     <None Remove="ClientApp\src\app\Services\home.service.ts" />
@@ -58,6 +59,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\Login\login.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\Models\home.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\polyfills.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\rus-paginator-intl.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\Services\home.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\Services\authentication.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\Services\authorizationCheck.ts" />

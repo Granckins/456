@@ -2,7 +2,7 @@ import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { DataSetService } from '../Services/home.service';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatPaginator, MatSort, MatTableDataSource, MatPaginatorIntl  } from '@angular/material';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { CouchRequest, EventCouch } from '../Models/home.model';  
 import { merge, Observable, of as observableOf } from 'rxjs';
@@ -16,6 +16,7 @@ import { MatAutocompleteSelectedEvent, MatChipInputEvent, MatAutocomplete } from
 export interface Fruit {
   name: string;
   value: string;
+  id:number;
 }
 @Component({
   selector: 'app-home',
@@ -37,6 +38,7 @@ export class HomeComponent implements AfterViewInit {
   data: EventCouch[] = [];
 
   resultsLength = 0;
+  pageSize = 10;
   isLoadingResults = true;
   isRateLimitReached = false;
 
@@ -69,7 +71,7 @@ export class HomeComponent implements AfterViewInit {
         startWith({}),
         switchMap(() => {
           this.isLoadingResults = true;
-          return this.dataService.getUser(this.sort.active, this.sort.direction, this.paginator.pageIndex);
+          return this.dataService.getUser(this.GetFilterString(), this.pageSize,this.sort.active, this.sort.direction, this.paginator.pageIndex);
         }),
         map(data => {
           // Flip flag to show that loading has finished.
@@ -95,20 +97,28 @@ export class HomeComponent implements AfterViewInit {
   condition(fruitname: string): boolean {
     if (fruitname == '(' || fruitname == ')' || fruitname == 'И' || fruitname == 'ИЛИ') {
       this.isBalanced();
+
       return false;
     }
-    else return true;
+    else {
+     return true;
+    }
   }
   visible = true;
   selectable = true;
   removable = true;
   Balanced = true;
+ RightOperator = true;
   addOnBlur = false;
   separatorKeysCodes: number[] = [ENTER, COMMA];
   fruitCtrl = new FormControl();
   filteredFruits: Observable<string[]>;
   fruits: Fruit[] = [];
-  allFruits: string[] = ['Все поля', 'Наименование', 'номер упаковки', '(', ')', 'И', 'ИЛИ'];
+  allFruits: string[] = ['(', ')', 'И', 'ИЛИ', 'Все поля', 'Номер упаковки', 'Наименование изделия',
+    'Заводской номер', 'Обозначение', 'Система', 'Принадлежность', 'Ответственный', 'Местонахождение',
+    'Откуда', 'Куда', 'Система', 'Примечание', 'Добавил'   ];
+  
+
 
   @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
 
@@ -123,14 +133,18 @@ export class HomeComponent implements AfterViewInit {
 
     // Add our fruit
     if ((value || '').trim() && this.allFruits.indexOf(value) > -1) {
-      this.fruits.push({ name: value.trim(), value: '' });
+      this.fruits.push({ name: value.trim(), value: '', id: this.fruits.length });
     }
 
     // Reset the input value
     if (input) {
       input.value = '';
     }
-
+    this.isRightOperator();
+    this.isBalanced();
+    if (this.isOkChip()) {
+      this.FilterString();
+    }
     this.fruitCtrl.setValue(null);
   }
 
@@ -139,14 +153,31 @@ export class HomeComponent implements AfterViewInit {
     if (index >= 0) {
       this.fruits.splice(index, 1);
     }
+    this.isRightOperator();
     this.isBalanced();
+    if (this.isOkChip()) {
+      this.FilterString();
+    }
   }
-
+  onChange(e, id: number) {
+    this.fruits[id].value = e.target.value;
+    this.isRightOperator();
+    this.isBalanced();
+    if (this.isOkChip()) {
+      this.FilterString();
+    }
+  }
   selected(event: MatAutocompleteSelectedEvent): void {
-    this.fruits.push({ name: event.option.viewValue, value: '' });
+    this.fruits.push({ name: event.option.viewValue, value: '', id: this.fruits.length });
     this.fruitInput.nativeElement.value = '';
     this.fruitCtrl.setValue(null);
     this.fruitInput.nativeElement.blur();
+    this.isRightOperator();
+    this.isBalanced();
+    if (this.isOkChip()) {
+      this.FilterString();
+    }
+
   }
 
   private _filter(value: string): string[] {
@@ -154,7 +185,109 @@ export class HomeComponent implements AfterViewInit {
 
     return this.allFruits.filter(option => option.toLowerCase().includes(filterValue));
   }
+  FilterString(): string {
+    var str = this.GetFilterString();
 
+    merge(this.sort.sortChange, this.paginator.page)
+      .pipe(
+        startWith({}),
+        switchMap(() => {
+          this.isLoadingResults = true;
+          return this.dataService.getUser(str, this.pageSize,this.sort.active, this.sort.direction, this.paginator.pageIndex);
+        }),
+        map(data => {
+          // Flip flag to show that loading has finished.
+          this.isLoadingResults = false;
+          this.isRateLimitReached = false;
+          this.resultsLength = data.total_rows;
+
+          return data.rows;
+        }),
+        catchError(() => {
+          this.isLoadingResults = false;
+          // Catch if the GitHub API has reached its rate limit. Return empty data.
+          this.isRateLimitReached = true;
+          return observableOf([]);
+        })
+      ).subscribe(data => this.data = data);
+  return str;
+  }
+
+  GetFilterString(): string {
+    var str = "";
+    var i = 0;
+    var copy = this.fruits;
+    if (!this.isOkChip()) return "";
+    this.fruits.forEach(function (value) {
+      if (value.name === 'Все поля') {
+        if (value.value === '') str += "";
+        else
+        str += "(Номер_упаковки:\u0022" + value.value + "\u0022 OR Наименование_изделия: \u0022" + value.value + "\u0022 OR " + "Заводской_номер: \u0022" + value.value + "\u0022 OR " + "Обозначение: \u0022" + value.value + "\u0022 OR " + "Система: \u0022" + value.value + "\u0022 OR " + "Принадлежность: \u0022" + value.value + "\u0022 OR " + "Ответственный: \u0022" + value.value + "\u0022 OR " + "Местонахождение_на_складе: \u0022" + value.value + "\u0022 OR " + "Откуда: \u0022" + value.value + "\u0022 OR " + "Куда: \u0022" + value.value + "\u0022 OR " + "Примечание: \u0022" + value.value + "\u0022 OR " + "Добавил: \u0022" + value.value + "\u0022 )";
+      }
+      else {
+        if (value.name === 'И') str += " AND ";
+        else {
+          if (value.name === 'ИЛИ') str += " OR ";
+          else {
+            if (value.name === '(') {
+              if (i >= 1) {
+                if (copy[i - 1].name != 'И' && copy[i - 1].name != 'ИЛИ' && copy[i - 1].name != '(')
+                  str += " AND ";
+              }
+              str += " ( ";
+            }
+            else {
+              if (value.value === '') str = "";
+              else {
+              if (value.name === ')') str += " ) ";
+              else {
+                if (i >= 1) {
+                  if (copy[i - 1].name != 'И' && copy[i - 1].name != 'ИЛИ' && copy[i - 1].name != '(')
+                    str += " AND ";
+                }
+
+                var name = value.name;
+                if (name === 'Номер упаковки') name = 'Номер_упаковки';
+                if (name === 'Наименование изделия') name = 'Наименование_изделия';
+                if (name === 'Заводской номер') name = 'Заводской_номер';
+                if (name === 'Местонахождение') name = 'Местонахождение_на_складе';
+                str += name + ": \u0022" + value.value + "\u0022";
+              }
+            }
+            }
+          }
+        }
+      }
+      i++;
+    });
+ 
+    return str;
+  }
+  isRightOperator(): boolean {
+    var f = true;
+    var copy = this.fruits;
+    var i = 0;
+    this.fruits.forEach(function (value) {
+      
+      if (i <= copy.length - 2) {
+        if ((value.name === 'ИЛИ' && copy[i + 1].name === 'ИЛИ') || (value.name === 'И' && copy[i + 1].name === 'И') || (value.name === 'ИЛИ' && copy[i + 1].name === 'И') || (value.name === 'И' && copy[i + 1].name === 'ИЛИ') || (value.name === 'И' && copy[i + 1].name === '(') || (value.name === 'ИЛИ' && copy[i + 1].name === '(') || (value.name === '(' && copy[i + 1].name === ')'))
+          f= false;
+        }
+     
+      i++;
+    });
+    if (this.fruits.length > 0)
+    {
+      if (this.fruits[0].name === 'И' || this.fruits[0].name === 'ИЛИ') {
+        f= false;
+      }
+      if (this.fruits[this.fruits.length - 1].name === 'И' || this.fruits[this.fruits.length - 1].name  === 'ИЛИ') {
+     f =false;
+      }
+    }
+    this.RightOperator = f;
+    return f;
+  }
   isBalanced(): boolean {
     var str = "";
     this.fruits.forEach(function (value) {
@@ -188,5 +321,8 @@ export class HomeComponent implements AfterViewInit {
     if (stack.length !== 0) { this.Balanced = false; return false; };
 
     this.Balanced = true; return true;
-  } 
+  }
+  isOkChip(): boolean {
+    return this.Balanced && this.RightOperator;
+  }
 }

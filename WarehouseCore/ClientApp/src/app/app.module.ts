@@ -56,6 +56,7 @@ import {
   MatSortModule,
   MatStepperModule,
   MatTableModule,
+  MatPaginatorIntl,
   MatTabsModule,
   MatToolbarModule,
   MatTooltipModule,
@@ -68,6 +69,7 @@ import { LoginComponent } from './Login/login.component';
 import { httpInterceptor } from './Interceptor/httpInterceptor';
 import { ErrorInterceptor } from './Interceptor/errorInterceptor';
 
+import { getRusPaginatorIntl } from './rus-paginator-intl';
 import { AuthorizationCheck } from './Services/authorizationCheck'; 
 import { DataSetService } from './Services/home.service';
 import { AuthenticationService } from './Services/authentication.service';
@@ -124,7 +126,7 @@ import { AuthenticationService } from './Services/authentication.service';
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule,
-    MatTreeModule,     
+    MatTreeModule, 
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full', canActivate: [AuthorizationCheck] },
       { path: 'home', component: HomeComponent, pathMatch: 'full', canActivate: [AuthorizationCheck] },
@@ -136,6 +138,7 @@ import { AuthenticationService } from './Services/authentication.service';
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: httpInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: MatPaginatorIntl, useValue: getRusPaginatorIntl() },
     AuthorizationCheck, AuthenticationService, DataSetService],
   bootstrap: [AppComponent]
 })
