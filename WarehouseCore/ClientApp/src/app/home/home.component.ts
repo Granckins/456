@@ -37,8 +37,7 @@ export class HomeComponent implements AfterViewInit {
   exampleDatabase: DataSetService | null;
   data: EventCouch[] = [];
 
-  resultsLength = 0;
-  pageSize = 10;
+  resultsLength = 0; 
   isLoadingResults = true;
   isRateLimitReached = false;
 
@@ -54,14 +53,13 @@ export class HomeComponent implements AfterViewInit {
 
 
   constructor(public dataService: DataSetService) {
-    this.isBalanced();
+    this.isBalanced(); 
     this.filteredFruits = this.fruitCtrl.valueChanges.pipe(
       startWith(null),
       map((fruit: string | null) => fruit ? this._filter(fruit) : this.allFruits.slice()));
   }
 
   ngAfterViewInit() {
-
 
     // If the user changes the sort order, reset back to the first page.
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
@@ -71,7 +69,9 @@ export class HomeComponent implements AfterViewInit {
         startWith({}),
         switchMap(() => {
           this.isLoadingResults = true;
-          return this.dataService.getUser(this.GetFilterString(), this.pageSize,this.sort.active, this.sort.direction, this.paginator.pageIndex);
+          var str = this.GetFilterString();
+          if (str = "---") str = "";
+          return this.dataService.getUser(this.GetFilterString(), this.paginator.pageSize,this.sort.active, this.sort.direction, this.paginator.pageIndex);
         }),
         map(data => {
           // Flip flag to show that loading has finished.
@@ -167,6 +167,26 @@ export class HomeComponent implements AfterViewInit {
       this.FilterString();
     }
   }
+  isNullAllChip( ): boolean {
+    this.fruits.forEach(function (value) {
+      if (value.value === "") {
+        if (!(value.name === '(' || value.name === ')' || value.name === 'И' || value.name === 'ИЛИ'))     
+        return false;
+      }
+      
+    });
+   return true;
+  }
+  isNullChip(id: number): boolean{
+
+    if (this.fruits[id].value === "") {
+      if (this.fruits[id].name === '(' || this.fruits[id].name === ')' || this.fruits[id].name === 'И' || this.fruits[id].name === 'ИЛИ')
+        return true;
+      return false;
+    }
+    else return true;
+
+  }
   selected(event: MatAutocompleteSelectedEvent): void {
     this.fruits.push({ name: event.option.viewValue, value: '', id: this.fruits.length });
     this.fruitInput.nativeElement.value = '';
@@ -187,29 +207,30 @@ export class HomeComponent implements AfterViewInit {
   }
   FilterString(): string {
     var str = this.GetFilterString();
+    if (str != "---") {
+      merge(this.sort.sortChange, this.paginator.page)
+        .pipe(
+          startWith({}),
+          switchMap(() => {
+            this.isLoadingResults = true;
+            return this.dataService.getUser(str, this.paginator.pageSize , this.sort.active, this.sort.direction, this.paginator.pageIndex);
+          }),
+          map(data => {
+            // Flip flag to show that loading has finished.
+            this.isLoadingResults = false;
+            this.isRateLimitReached = false;
+            this.resultsLength = data.total_rows;
 
-    merge(this.sort.sortChange, this.paginator.page)
-      .pipe(
-        startWith({}),
-        switchMap(() => {
-          this.isLoadingResults = true;
-          return this.dataService.getUser(str, this.pageSize,this.sort.active, this.sort.direction, this.paginator.pageIndex);
-        }),
-        map(data => {
-          // Flip flag to show that loading has finished.
-          this.isLoadingResults = false;
-          this.isRateLimitReached = false;
-          this.resultsLength = data.total_rows;
-
-          return data.rows;
-        }),
-        catchError(() => {
-          this.isLoadingResults = false;
-          // Catch if the GitHub API has reached its rate limit. Return empty data.
-          this.isRateLimitReached = true;
-          return observableOf([]);
-        })
-      ).subscribe(data => this.data = data);
+            return data.rows;
+          }),
+          catchError(() => {
+            this.isLoadingResults = false;
+            // Catch if the GitHub API has reached its rate limit. Return empty data.
+            this.isRateLimitReached = true;
+            return observableOf([]);
+          })
+        ).subscribe(data => this.data = data);
+    }
   return str;
   }
 
@@ -217,7 +238,8 @@ export class HomeComponent implements AfterViewInit {
     var str = "";
     var i = 0;
     var copy = this.fruits;
-    if (!this.isOkChip()) return "";
+    if (!this.isOkChip()) return "---";
+    if (!this.isNullAllChip()) return "---";
     this.fruits.forEach(function (value) {
       if (value.name === 'Все поля') {
         if (value.value === '') str += "";

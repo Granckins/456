@@ -112,7 +112,7 @@ namespace Warehouse.Core.Repositories
         {
             CouchRequest<EventCouch> list = new CouchRequest<EventCouch>();
           var  limit = pagesize;
-            var skip = (page ) * limit;
+            var skip = (page -1) * limit;
             if (filter == null)
                 filter = "";
             var q = "";

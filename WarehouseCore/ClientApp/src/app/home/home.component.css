@@ -1,6 +1,8 @@
-.example-container {
-  height: 700px; 
-  overflow: auto;
+.example-container { 
+  overflow-x: scroll;
+  overflow-y: scroll;
+  max-height: -webkit-fill-available;
+  
 }
 
 table {
@@ -14,7 +16,7 @@ table {
 
 
 .example-container1 {
-  max-height: 400px;
+  max-height: -webkit-fill-available;
   overflow: auto;
 }
 

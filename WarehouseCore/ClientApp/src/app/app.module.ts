@@ -3,8 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
-
+import { RouterModule } from '@angular/router'; 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 
@@ -17,12 +16,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
  
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';  
-
-
-
-
-
-
+ 
+ 
 
 import {
   MatAutocompleteModule,
@@ -138,7 +133,7 @@ import { AuthenticationService } from './Services/authentication.service';
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: httpInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    { provide: MatPaginatorIntl, useValue: getRusPaginatorIntl() },
+    { provide: MatPaginatorIntl, useValue: getRusPaginatorIntl() }, 
     AuthorizationCheck, AuthenticationService, DataSetService],
   bootstrap: [AppComponent]
 })
