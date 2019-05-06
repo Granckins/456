@@ -4,7 +4,11 @@ class RevsInfo {
   rev: string;
   status: string;
 } 
- 
+export class Warehouse {
+  name: string;
+  _rev: string;
+  _id: string;
+}
 export class EventCouch  {
   archive: boolean;
   _rev: string;
@@ -61,6 +65,7 @@ class CouchRequestClass<Obj>  implements CouchRequest <Obj> {
   offset: number;
   row: RowCouch; 
   rows: Array<Obj> = new Array();
+  wars: Array<Warehouse> = new Array();
 }
 
 export interface CouchRequest<Obj>
@@ -69,5 +74,5 @@ export interface CouchRequest<Obj>
   offset: number;
   row: RowCouch; 
   rows: Array<Obj>;
-  
+  wars: Array<Warehouse>;
     }

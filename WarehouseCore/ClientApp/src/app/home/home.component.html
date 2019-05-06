@@ -62,6 +62,17 @@
         </mat-autocomplete>
       </mat-form-field>
       <div class="text-inside" style="text-align: left; margin-bottom: 10px;">
+        <mat-form-field style="width: 25%;">
+          <mat-label>Склад</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let war of wars" [value]="war._id">
+              {{war.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+
+
         <mat-chip class="outside"
                   *ngFor="let fruit of fruits"
                   [selectable]="selectable"

@@ -4,7 +4,7 @@ import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag
 
 import { MatPaginator, MatSort, MatTableDataSource, MatPaginatorIntl  } from '@angular/material';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { CouchRequest, EventCouch } from '../Models/home.model';  
+import { CouchRequest, EventCouch, Warehouse } from '../Models/home.model';  
 import { merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 
@@ -31,6 +31,7 @@ export interface Fruit {
   ],
 })
 export class HomeComponent implements AfterViewInit {
+  wars: Warehouse[] = [];
   displayedColumns: string[] = ['Nomer_upakovki', 'Naimenovanie_izdeliya', 'Zavodskoj_nomer', 'Kolichestvo', 'Mestonahozhdenie_na_sklade'
     , 'Oboznachenie', 'Sistema', 'Otvetstvennyj', 'Prinadlezhnost', 'Data_priyoma', 'Otkuda', 'Data_vydachi', 'Kuda', 'Nomer_plomby',
     'Stoimost', 'Ves_brutto', 'Ves_netto', 'Dlina', 'Shirina', 'Vysota', 'Primechanie', 'Dobavil', 'Data_ismenen'];
@@ -70,20 +71,19 @@ export class HomeComponent implements AfterViewInit {
         switchMap(() => {
           this.isLoadingResults = true;
           var str = this.GetFilterString();
-          if (str = "---") str = "";
-          return this.dataService.getUser(this.GetFilterString(), this.paginator.pageSize,this.sort.active, this.sort.direction, this.paginator.pageIndex);
+          if (str == "---") str = "";
+          return this.dataService.getUser(str, this.paginator.pageSize,this.sort.active, this.sort.direction, this.paginator.pageIndex);
         }),
         map(data => {
           // Flip flag to show that loading has finished.
           this.isLoadingResults = false;
           this.isRateLimitReached = false;
           this.resultsLength = data.total_rows;
-
+          this.wars = data.wars;
           return data.rows;
         }),
         catchError(() => {
-          this.isLoadingResults = false;
-          // Catch if the GitHub API has reached its rate limit. Return empty data.
+          this.isLoadingResults = false;  
           this.isRateLimitReached = true;
           return observableOf([]);
         })
@@ -105,6 +105,7 @@ export class HomeComponent implements AfterViewInit {
     }
   }
   visible = true;
+  prevFilter = "";
   selectable = true;
   removable = true;
   Balanced = true;
@@ -114,6 +115,7 @@ export class HomeComponent implements AfterViewInit {
   fruitCtrl = new FormControl();
   filteredFruits: Observable<string[]>;
   fruits: Fruit[] = [];
+  Wars: Warehouse[] = [];
   allFruits: string[] = ['(', ')', 'И', 'ИЛИ', 'Все поля', 'Номер упаковки', 'Наименование изделия',
     'Заводской номер', 'Обозначение', 'Система', 'Принадлежность', 'Ответственный', 'Местонахождение',
     'Откуда', 'Куда', 'Система', 'Примечание', 'Добавил'   ];
@@ -153,6 +155,8 @@ export class HomeComponent implements AfterViewInit {
     if (index >= 0) {
       this.fruits.splice(index, 1);
     }
+
+    this.paginator.pageIndex = 0;
     this.isRightOperator();
     this.isBalanced();
     if (this.isOkChip()) {
@@ -163,6 +167,8 @@ export class HomeComponent implements AfterViewInit {
     this.fruits[id].value = e.target.value;
     this.isRightOperator();
     this.isBalanced();
+
+    this.paginator.pageIndex = 0;
     if (this.isOkChip()) {
       this.FilterString();
     }
@@ -194,6 +200,8 @@ export class HomeComponent implements AfterViewInit {
     this.fruitInput.nativeElement.blur();
     this.isRightOperator();
     this.isBalanced();
+
+    this.paginator.pageIndex = 0;
     if (this.isOkChip()) {
       this.FilterString();
     }
@@ -212,25 +220,25 @@ export class HomeComponent implements AfterViewInit {
         .pipe(
           startWith({}),
           switchMap(() => {
-            this.isLoadingResults = true;
+            this.isLoadingResults = true; 
             return this.dataService.getUser(str, this.paginator.pageSize , this.sort.active, this.sort.direction, this.paginator.pageIndex);
           }),
           map(data => {
             // Flip flag to show that loading has finished.
             this.isLoadingResults = false;
             this.isRateLimitReached = false;
-            this.resultsLength = data.total_rows;
-
+            this.resultsLength = data.total_rows; 
             return data.rows;
           }),
           catchError(() => {
             this.isLoadingResults = false;
             // Catch if the GitHub API has reached its rate limit. Return empty data.
-            this.isRateLimitReached = true;
+            this.isRateLimitReached = true; 
             return observableOf([]);
           })
         ).subscribe(data => this.data = data);
     }
+    this.prevFilter = str;
   return str;
   }
 

@@ -30,10 +30,11 @@ namespace Warehouse.Model.Db
         public int offset { get; set; }
         public RowCouch row { get; set; }
         public List<Obj> rows { get; set; }
+        public List<Warehouse> wars { get; set; }
         public CouchRequest()
         {
             rows = new List<Obj>();
-
+            wars = new List<Warehouse>();
         }
     }
     public class CouchRequestMultiKey<Obj>

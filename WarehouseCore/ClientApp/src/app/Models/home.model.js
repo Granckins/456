@@ -5,9 +5,16 @@ var RevsInfo = /** @class */ (function () {
     }
     return RevsInfo;
 }());
+var Warehouse = /** @class */ (function () {
+    function Warehouse() {
+    }
+    return Warehouse;
+}());
+exports.Warehouse = Warehouse;
 var EventCouch = /** @class */ (function () {
     function EventCouch() {
         this._revs_info = new Array();
+        this.expand = false;
     }
     return EventCouch;
 }());
@@ -21,6 +28,7 @@ exports.RowCouch = RowCouch;
 var CouchRequestClass = /** @class */ (function () {
     function CouchRequestClass() {
         this.rows = new Array();
+        this.wars = new Array();
     }
     return CouchRequestClass;
 }());

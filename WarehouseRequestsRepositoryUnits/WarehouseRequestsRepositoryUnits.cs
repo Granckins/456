@@ -23,7 +23,7 @@ namespace Warehouse.Core.Repositories
 
             HttpClientHandler handler = new HttpClientHandler();
 
-            Console.WriteLine("GET: + " + TARGETURL);
+           
 
             // ... Use HttpClient.            
             HttpClient client = new HttpClient(handler);
@@ -34,9 +34,7 @@ namespace Warehouse.Core.Repositories
             HttpResponseMessage response = await client.GetAsync(TARGETURL);
             HttpContent content = response.Content;
 
-            // ... Check Status Code                                
-            Console.WriteLine("Response StatusCode: " + (int)response.StatusCode);
-
+         
             // ... Read the string.
             string result = await content.ReadAsStringAsync();
 
@@ -108,6 +106,8 @@ namespace Warehouse.Core.Repositories
             else
                 return new UserIdentity { UserId = "000000000000000000000000" };
         }
+
+
         public CouchRequest<EventCouch> GetFilterSortDocuments(string filter="", int pagesize=10, string sort="Номер_упаковки", string order="", int page=0)
         {
             CouchRequest<EventCouch> list = new CouchRequest<EventCouch>();
@@ -144,18 +144,16 @@ namespace Warehouse.Core.Repositories
          
            
             var url = "http://localhost:5984/_fti/local/events/_design/searchdocuments/by_fields?q=" + q + sort1 + "&skip=" + skip + "&limit=" + limit;
-            var request = (HttpWebRequest)WebRequest.Create(url);
-
-            request.Credentials = new NetworkCredential("admin", "root");
-            var response = request.GetResponse();
+  
 
             var user = new User();
             var lucene1 = new LuceneRequest<EventCouch>();
             lucene1.rows = new List<Row<EventCouch>>();
-            using (var responseStream = response.GetResponseStream())
-            {
-                var reader = new StreamReader(responseStream, Encoding.UTF8);
-                var res = reader.ReadToEnd();
+
+            Task<string> task = HTTP_GET(url);
+            task.Wait();
+            var res = task.Result;
+  
                 var lucene = JsonConvert.DeserializeObject<LuceneRequest<EventWar>>(res);
 
                 foreach (var l in lucene.rows)
@@ -176,8 +174,127 @@ namespace Warehouse.Core.Repositories
                     list.rows.Last()._id = r.id;
                 }
          
-            }
+           
             return list;
+
+        }
+public void Update() {
+
+            var url = "http://localhost:5984/_fti/local/events/_design/searchdocuments/by_fields?q=archive:false&limit=80";
+
+
+            var user = new User();
+            var lucene1 = new LuceneRequest<EventCouch>();
+            lucene1.rows = new List<Row<EventCouch>>();
+
+            Task<string> task = HTTP_GET(url);
+            task.Wait();
+            var res = task.Result;
+
+            var lucene = JsonConvert.DeserializeObject<LuceneRequest<EventWar>>(res);
+
+            foreach (var l in lucene.rows)
+            {
+
+                EventCouch ev = new EventCouch();
+                ev = EventManager.ConvertEventWarToEventCouchParent(l.fields);
+
+
+                lucene1.rows.Add(new Row<EventCouch>() { id = l.id, fields = ev });
+            }
+            CouchRequest<EventCouch> list = new CouchRequest<EventCouch>();
+            list.total_rows = lucene.total_rows;
+
+
+            foreach (var r in lucene1.rows)
+            {
+                list.rows.Add(r.fields);
+                list.rows.Last()._id = r.id;
+            }
+            int i = 0;
+            foreach (var r in list.rows)
+            {
+                r.warehouse = "6ded85b9bca49078e3d47e1508000796";
+                var json = JsonConvert.SerializeObject(r);
+                var request = (HttpWebRequest)WebRequest.Create("http://localhost:5984/events/" + r._id);
+
+                ServicePointManager.DefaultConnectionLimit = 100000;
+
+                request.Credentials = new NetworkCredential("admin", "root");
+                request.Method = "PUT";
+                request.ContentType = "application/json";
+                request.KeepAlive = false;
+                using (var streamWriter = new StreamWriter(request.GetRequestStream()))
+                {
+
+                    var o = (Newtonsoft.Json.Linq.JObject)JsonConvert.DeserializeObject(json);
+
+                    var json1 = JsonConvert.SerializeObject(o);
+                    streamWriter.Write(json1);
+
+                }
+                var httpResponse = (HttpWebResponse)request.GetResponse();
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    i++;
+                }
+                   
+            }
+
+  url = "http://localhost:5984/_fti/local/events/_design/searchdocuments/by_fields?q=archive:true&limit=80";
+
+
+              user = new User();
+            lucene1 = new LuceneRequest<EventCouch>();
+            lucene1.rows = new List<Row<EventCouch>>();
+
+           task = HTTP_GET(url);
+            task.Wait();
+            res = task.Result;
+
+             lucene = JsonConvert.DeserializeObject<LuceneRequest<EventWar>>(res);
+
+            foreach (var l in lucene.rows)
+            {
+
+                EventCouch ev = new EventCouch();
+                ev = EventManager.ConvertEventWarToEventCouchParent(l.fields);
+
+
+                lucene1.rows.Add(new Row<EventCouch>() { id = l.id, fields = ev });
+            }
+       list = new CouchRequest<EventCouch>();
+            list.total_rows = lucene.total_rows;
+
+
+            foreach (var r in lucene1.rows)
+            {
+                list.rows.Add(r.fields);
+                list.rows.Last()._id = r.id;
+            }
+            foreach (var r in list.rows)
+            {
+                r.warehouse = "6ded85b9bca49078e3d47e1508000796";
+                var json = JsonConvert.SerializeObject(r);
+                var request = (HttpWebRequest)WebRequest.Create("http://localhost:5984/events/" + r._id);
+
+                ServicePointManager.DefaultConnectionLimit = 1000;
+
+                request.Credentials = new NetworkCredential("admin", "root");
+                request.Method = "PUT";
+                request.ContentType = "application/json";
+                request.KeepAlive = false;
+                using (var streamWriter = new StreamWriter(request.GetRequestStream()))
+                {
+
+                    var o = (Newtonsoft.Json.Linq.JObject)JsonConvert.DeserializeObject(json);
+
+                    var json1 = JsonConvert.SerializeObject(o);
+                    streamWriter.Write(json1);
+
+                }
+
+            }
 
         }
 

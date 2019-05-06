@@ -18,9 +18,9 @@ namespace WarehouseCore.Controllers
         {
             var FS = new FilterSort();
             var res1 = new CouchRequest<EventCouch>();
-            
 
 
+            //Repository.Update();
             res1 = Repository.GetFilterSortDocuments( filter,  pagesize,  sort,  order,  page);
 
 
