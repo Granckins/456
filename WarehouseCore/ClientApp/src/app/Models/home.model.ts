@@ -7,7 +7,7 @@ class RevsInfo {
 export class Warehouse {
   name: string;
   _rev: string;
-  _id: string;
+  id: string;
 }
 export class EventCouch  {
   archive: boolean;

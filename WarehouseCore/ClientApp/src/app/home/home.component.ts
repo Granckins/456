@@ -38,6 +38,8 @@ export class HomeComponent implements AfterViewInit {
   exampleDatabase: DataSetService | null;
   data: EventCouch[] = [];
 
+  warehouse = 'option2';
+
   resultsLength = 0; 
   isLoadingResults = true;
   isRateLimitReached = false;
@@ -80,6 +82,10 @@ export class HomeComponent implements AfterViewInit {
           this.isRateLimitReached = false;
           this.resultsLength = data.total_rows;
           this.wars = data.wars;
+          if (this.wars.length > 0)
+            this.warehouse = this.wars[0].name;
+          else
+            this.warehouse = "";
           return data.rows;
         }),
         catchError(() => {
@@ -87,7 +93,7 @@ export class HomeComponent implements AfterViewInit {
           this.isRateLimitReached = true;
           return observableOf([]);
         })
-      ).subscribe(data => this.data = data);
+      ).subscribe(data => this.data = data, wars => this.wars);
   }
 
   expandRow(e: EventCouch) {
@@ -206,8 +212,7 @@ export class HomeComponent implements AfterViewInit {
       this.FilterString();
     }
 
-  }
-
+  } 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 

@@ -62,16 +62,6 @@
         </mat-autocomplete>
       </mat-form-field>
       <div class="text-inside" style="text-align: left; margin-bottom: 10px;">
-        <mat-form-field style="width: 25%;">
-          <mat-label>Склад</mat-label>
-          <mat-select>
-            <mat-option *ngFor="let war of wars" [value]="war._id">
-              {{war.name}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-
-
 
         <mat-chip class="outside"
                   *ngFor="let fruit of fruits"
@@ -85,6 +75,23 @@
 
           <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
         </mat-chip>
+
+  
+      </div>
+
+      <div class="text-inside" style="text-align: left; margin-bottom: 10px;">
+
+    
+
+        <mat-form-field style="width: 25%;">
+          <mat-label>Склад</mat-label>
+          <mat-select [(value)]="warehouse">
+
+            <mat-option *ngFor="let war of wars" [value]="war.id">
+              {{war.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
       <mat-paginator #paginator [pageSizeOptions]="[5, 10, 25, 50, 100]" [showFirstLastButtons]="true" [length]="resultsLength" (page)="pageEvent = $event">
       </mat-paginator>
