@@ -38,7 +38,7 @@ export class HomeComponent implements AfterViewInit {
   exampleDatabase: DataSetService | null;
   data: EventCouch[] = [];
 
-  warehouse = 'option2';
+  warehouse = '';
 
   resultsLength = 0; 
   isLoadingResults = true;
@@ -74,7 +74,7 @@ export class HomeComponent implements AfterViewInit {
           this.isLoadingResults = true;
           var str = this.GetFilterString();
           if (str == "---") str = "";
-          return this.dataService.getUser(str, this.paginator.pageSize,this.sort.active, this.sort.direction, this.paginator.pageIndex);
+          return this.dataService.getUser(str, this.paginator.pageSize, this.sort.active, this.sort.direction, this.paginator.pageIndex, this.warehouse);
         }),
         map(data => {
           // Flip flag to show that loading has finished.
@@ -82,10 +82,7 @@ export class HomeComponent implements AfterViewInit {
           this.isRateLimitReached = false;
           this.resultsLength = data.total_rows;
           this.wars = data.wars;
-          if (this.wars.length > 0)
-            this.warehouse = this.wars[0].name;
-          else
-            this.warehouse = "";
+  
           return data.rows;
         }),
         catchError(() => {
@@ -212,7 +209,10 @@ export class HomeComponent implements AfterViewInit {
       this.FilterString();
     }
 
-  } 
+  }
+  selectwarehouse(): void{
+    this.FilterString();
+  }
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 
@@ -225,8 +225,8 @@ export class HomeComponent implements AfterViewInit {
         .pipe(
           startWith({}),
           switchMap(() => {
-            this.isLoadingResults = true; 
-            return this.dataService.getUser(str, this.paginator.pageSize , this.sort.active, this.sort.direction, this.paginator.pageIndex);
+            this.isLoadingResults = true;
+            return this.dataService.getUser(str, this.paginator.pageSize, this.sort.active, this.sort.direction, this.paginator.pageIndex, this.warehouse);
           }),
           map(data => {
             // Flip flag to show that loading has finished.

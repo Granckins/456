@@ -14,14 +14,14 @@ namespace WarehouseCore.Controllers
     {
         WarehouseRequestsRepositoryUnits Repository = new WarehouseRequestsRepositoryUnits();
         [HttpGet("[action]")]
-        public CouchRequest<EventCouch> FilterSortDocument(string filter, int pagesize, string sort  , string order  ,int page  )
+        public CouchRequest<EventCouch> FilterSortDocument(string filter, int pagesize, string sort  , string order  ,int page, string warehouse  )
         {
             var FS = new FilterSort();
             var res1 = new CouchRequest<EventCouch>();
 
 
             //Repository.Update();
-            res1 = Repository.GetFilterSortDocuments( filter,  pagesize,  sort,  order,  page);
+            res1 = Repository.GetFilterSortDocuments( filter,  pagesize,  sort,  order,  page, warehouse);
 
 
             return res1;

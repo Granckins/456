@@ -10,10 +10,10 @@ export class DataSetService {
 
   constructor(private http: HttpClient) { }
 
-  getUser(filter:string, pagesize: number, sort: string, order: string, page: number): Observable<CouchRequest<EventCouch>> {
+  getUser(filter: string, pagesize: number, sort: string, order: string, page: number, warehouse: string): Observable<CouchRequest<EventCouch>> {
     const href = 'api/Data/FilterSortDocument';
     const requestUrl =
-      `${href}?filter=${filter}&pagesize=${pagesize}&sort=${sort}&order=${order}&page=${page + 1}`;
+      `${href}?filter=${filter}&pagesize=${pagesize}&sort=${sort}&order=${order}&page=${page + 1}&warehouse=${warehouse}`;
     return this.http.get<CouchRequest<EventCouch>>(requestUrl);
   }
 

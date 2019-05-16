@@ -108,7 +108,7 @@ namespace Warehouse.Core.Repositories
         }
 
 
-        public CouchRequest<EventCouch> GetFilterSortDocuments(string filter="", int pagesize=10, string sort="Номер_упаковки", string order="", int page=0)
+        public CouchRequest<EventCouch> GetFilterSortDocuments(string filter="", int pagesize=10, string sort="Номер_упаковки", string order="", int page=0, string warehouse="")
         {
             CouchRequest<EventCouch> list = new CouchRequest<EventCouch>();
           var  limit = pagesize;
@@ -139,10 +139,12 @@ namespace Warehouse.Core.Repositories
                     else
                     sort1 += "\\" +sort;
             }
-                    
-            
-         
-           
+
+            if (warehouse == null||warehouse=="")
+                warehouse = "";
+            else
+            q = "(" + q+")"+" AND "+"warehouse:"+warehouse;
+
             var url = "http://localhost:5984/_fti/local/events/_design/searchdocuments/by_fields?q=" + q + sort1 + "&skip=" + skip + "&limit=" + limit;
   
 
@@ -194,7 +196,35 @@ namespace Warehouse.Core.Repositories
             return list;
 
         }
-public void Update() {
+        public string GetUUID()
+        {
+            var url = "http://localhost:5984/_uuids";
+            var request = (HttpWebRequest)WebRequest.Create(url);
+
+            request.Credentials = new NetworkCredential("admin", "root");
+            var response = request.GetResponse();
+
+            try
+            {
+                using (var responseStream = response.GetResponseStream())
+                {
+                    var reader = new StreamReader(responseStream, Encoding.UTF8);
+                    var res = reader.ReadToEnd();
+
+                    var uuid = JsonConvert.DeserializeObject<UUID>(res);
+                    return uuid.uuids.First();
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+
+
+
+            return null;
+        }
+        public void Update() {
 
             var url = "http://localhost:5984/_fti/local/events/_design/searchdocuments/by_fields?q=archive:false&limit=80";
 
@@ -231,66 +261,13 @@ public void Update() {
             foreach (var r in list.rows)
             {
                 r.warehouse = "6ded85b9bca49078e3d47e1508000796";
-                var json = JsonConvert.SerializeObject(r);
-                var request = (HttpWebRequest)WebRequest.Create("http://localhost:5984/events/" + r._id);
 
-                ServicePointManager.DefaultConnectionLimit = 100000;
+                //var id1 = "";
 
-                request.Credentials = new NetworkCredential("admin", "root");
-                request.Method = "PUT";
-                request.ContentType = "application/json";
-                request.KeepAlive = false;
-                using (var streamWriter = new StreamWriter(request.GetRequestStream()))
-                {
-
-                    var o = (Newtonsoft.Json.Linq.JObject)JsonConvert.DeserializeObject(json);
-
-                    var json1 = JsonConvert.SerializeObject(o);
-                    streamWriter.Write(json1);
-
-                }
-                var httpResponse = (HttpWebResponse)request.GetResponse();
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                {
-                    i++;
-                }
-                   
-            }
-
-  url = "http://localhost:5984/_fti/local/events/_design/searchdocuments/by_fields?q=archive:true&limit=80";
-
-
-              user = new User();
-            lucene1 = new LuceneRequest<EventCouch>();
-            lucene1.rows = new List<Row<EventCouch>>();
-
-           task = HTTP_GET(url);
-            task.Wait();
-            res = task.Result;
-
-             lucene = JsonConvert.DeserializeObject<LuceneRequest<EventWar>>(res);
-
-            foreach (var l in lucene.rows)
-            {
-
-                EventCouch ev = new EventCouch();
-                ev = EventManager.ConvertEventWarToEventCouchParent(l.fields);
-
-
-                lucene1.rows.Add(new Row<EventCouch>() { id = l.id, fields = ev });
-            }
-       list = new CouchRequest<EventCouch>();
-            list.total_rows = lucene.total_rows;
-
-
-            foreach (var r in lucene1.rows)
-            {
-                list.rows.Add(r.fields);
-                list.rows.Last()._id = r.id;
-            }
-            foreach (var r in list.rows)
-            {
-                r.warehouse = "6ded85b9bca49078e3d47e1508000796";
+                ////    id1 = GetUUID();
+                //DateTime UpdatedTime = r.Data_vydachi ?? new DateTime();
+               
+                //r.Data_vydachi = new DateTimeOffset(r.Data_vydachi).ToUnixTimeMilliseconds();
                 var json = JsonConvert.SerializeObject(r);
                 var request = (HttpWebRequest)WebRequest.Create("http://localhost:5984/events/" + r._id);
 
@@ -302,16 +279,18 @@ public void Update() {
                 request.KeepAlive = false;
                 using (var streamWriter = new StreamWriter(request.GetRequestStream()))
                 {
+ 
 
-                    var o = (Newtonsoft.Json.Linq.JObject)JsonConvert.DeserializeObject(json);
+                        var o = (Newtonsoft.Json.Linq.JObject)JsonConvert.DeserializeObject(json);
 
-                    var json1 = JsonConvert.SerializeObject(o);
-                    streamWriter.Write(json1);
 
+                        var json1 = JsonConvert.SerializeObject(o);
+
+                        streamWriter.Write(json1);
+                     
                 }
-
             }
-
+             
         }
 
         public void Dispose()
