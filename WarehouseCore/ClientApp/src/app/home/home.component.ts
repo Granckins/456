@@ -257,7 +257,10 @@ export class HomeComponent implements AfterViewInit {
       if (value.name === 'Все поля') {
         if (value.value === '') str += "";
         else
-        str += "(Номер_упаковки:\u0022" + value.value + "\u0022 OR Наименование_изделия: \u0022" + value.value + "\u0022 OR " + "Заводской_номер: \u0022" + value.value + "\u0022 OR " + "Обозначение: \u0022" + value.value + "\u0022 OR " + "Система: \u0022" + value.value + "\u0022 OR " + "Принадлежность: \u0022" + value.value + "\u0022 OR " + "Ответственный: \u0022" + value.value + "\u0022 OR " + "Местонахождение_на_складе: \u0022" + value.value + "\u0022 OR " + "Откуда: \u0022" + value.value + "\u0022 OR " + "Куда: \u0022" + value.value + "\u0022 OR " + "Примечание: \u0022" + value.value + "\u0022 OR " + "Добавил: \u0022" + value.value + "\u0022 )";
+          str += "(Номер_упаковки:" + value.value + "~10" + " OR Наименование_изделия: " + value.value + "~10" + " OR " + "Заводской_номер: " + value.value + "~0.8" +
+            " OR " + "Обозначение:" + value.value + "~0.8" + " OR " + "Система: " + value.value + "~10" + " OR " + "Принадлежность:" + value.value + "~10" + " OR " + "Ответственный: "
+            + value.value + "~10" + "OR " + "Местонахождение_на_складе:" + value.value + "~0.8" + " OR " + "Откуда: " + value.value + "~10" + "OR " + "Куда: " + value.value + "~10" + " OR " + "Примечание: "
+            + value.value + "~10" + " OR " + "Добавил: " + value.value + "~10" + " )";
       }
       else {
         if (value.name === 'И') str += " AND ";
@@ -286,7 +289,10 @@ export class HomeComponent implements AfterViewInit {
                 if (name === 'Наименование изделия') name = 'Наименование_изделия';
                 if (name === 'Заводской номер') name = 'Заводской_номер';
                 if (name === 'Местонахождение') name = 'Местонахождение_на_складе';
-                str += name + ": \u0022" + value.value + "\u0022";
+                if (name === 'Наименование изделия')
+                  str += name + ": " + value.value + "~10" + "";
+                else
+                str += name + ": " + value.value + "~0.8" + "";
               }
             }
             }
