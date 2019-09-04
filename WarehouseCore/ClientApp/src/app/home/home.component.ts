@@ -257,10 +257,10 @@ export class HomeComponent implements AfterViewInit {
       if (value.name === 'Все поля') {
         if (value.value === '') str += "";
         else
-          str += "(Номер_упаковки:" + value.value + "~10" + " OR Наименование_изделия: " + value.value + "~10" + " OR " + "Заводской_номер: " + value.value + "~0.8" +
-            " OR " + "Обозначение:" + value.value + "~0.8" + " OR " + "Система: " + value.value + "~10" + " OR " + "Принадлежность:" + value.value + "~10" + " OR " + "Ответственный: "
-            + value.value + "~10" + "OR " + "Местонахождение_на_складе:" + value.value + "~0.8" + " OR " + "Откуда: " + value.value + "~10" + "OR " + "Куда: " + value.value + "~10" + " OR " + "Примечание: "
-            + value.value + "~10" + " OR " + "Добавил: " + value.value + "~10" + " )";
+          str += "(Номер_упаковки:" + value.value + "~" + " OR Наименование_изделия: " + value.value + "~" + " OR " + "Заводской_номер: " + value.value + "~0.8" +
+            " OR " + "Обозначение:" + value.value + "~0.8" + " OR " + "Система: " + value.value + "~" + " OR " + "Принадлежность:" + value.value + "~" + " OR " + "Ответственный: "
+            + value.value + "~" + "OR " + "Местонахождение_на_складе:" + value.value + "~0.8" + " OR " + "Откуда: " + value.value + "~" + "OR " + "Куда: " + value.value + "~" + " OR " + "Примечание: "
+            + value.value + "~" + " OR " + "Добавил: " + value.value + "~" + " )";
       }
       else {
         if (value.name === 'И') str += " AND ";
@@ -290,7 +290,7 @@ export class HomeComponent implements AfterViewInit {
                 if (name === 'Заводской номер') name = 'Заводской_номер';
                 if (name === 'Местонахождение') name = 'Местонахождение_на_складе';
                 if (name === 'Наименование изделия')
-                  str += name + ": " + value.value + "~10" + "";
+                  str += name + ": " + value.value + "~" + "";
                 else
                 str += name + ": " + value.value + "~0.8" + "";
               }

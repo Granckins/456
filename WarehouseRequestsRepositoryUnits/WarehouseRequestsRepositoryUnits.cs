@@ -170,31 +170,57 @@ namespace Warehouse.Core.Repositories
                 list.total_rows = lucene.total_rows;
            
 
-                foreach (var r in lucene1.rows)
+                 foreach (var r in lucene1.rows)
                 {
                    list.rows.Add( r.fields  );
                     list.rows.Last()._id = r.id;
-                }
+                var mil = ConvertToUnixTimestamp(r.fields.Data_priyoma==null?new DateTime(): r.fields.Data_priyoma.Value);
+                //r.fields.Data_priyoma_double = mil;
+                //var json = JsonConvert.SerializeObject(r.fields);
+                //var request = (HttpWebRequest)WebRequest.Create("http://localhost:5984/events/" + r.id);
+
+                //ServicePointManager.DefaultConnectionLimit = 1000;
+
+                //request.Credentials = new NetworkCredential("admin", "root");
+                //request.Method = "PUT";
+                //request.ContentType = "application/json";
+                //request.KeepAlive = false;
+                //using (var streamWriter = new StreamWriter(request.GetRequestStream()))
+                //{
+
+                //    var o = (Newtonsoft.Json.Linq.JObject)JsonConvert.DeserializeObject(json);
+
+                //    var json1 = JsonConvert.SerializeObject(o);
+                //    streamWriter.Write(json1);
+
+                //}
+            }
 
 
-             url = "http://localhost:5984/_fti/local/warehouses/_design/searchdocuments/by_fields?q=archive:false";
+          //   url = "http://localhost:5984/_fti/local/warehouses/_design/searchdocuments/by_fields?q=archive:false";
  
-            task = HTTP_GET(url);
-            task.Wait();
-           res = task.Result;
+          //  task = HTTP_GET(url);
+          //  task.Wait();
+          // res = task.Result;
 
-          var  lucene123 = JsonConvert.DeserializeObject<LuceneRequest<Warehouse.Model.Db.Warehouse>>(res);
+          //var  lucene123 = JsonConvert.DeserializeObject<LuceneRequest<Warehouse.Model.Db.Warehouse>>(res);
 
      
 
-            foreach (var r in lucene123.rows)
-            {
-                r.fields.id = r.id;
-                list.wars.Add(r.fields); 
-            }
+          //  foreach (var r in lucene123.rows)
+          //  {
+          //      r.fields.id = r.id;
+          //      list.wars.Add(r.fields); 
+          //  }
 
             return list;
 
+        }
+        static double ConvertToUnixTimestamp(DateTime date)
+        {
+            DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            TimeSpan diff = date - origin;
+            return Math.Floor(diff.TotalSeconds);
         }
         public string GetUUID()
         {

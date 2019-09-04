@@ -197,7 +197,7 @@
           </ng-container>
           <ng-container matColumnDef="Data_ismenen">
             <th class="rotate" mat-header-cell *matHeaderCellDef><div><span> Дата изменения</span></div></th>
-            <td mat-cell *matCellDef="let element"> {{element.Data_ismenen | date: 'dd.MMMM.yyyy'}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.Data_ismenen  | date: 'dd.MM.yyyy'}} </td>
           </ng-container>
 
           <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->

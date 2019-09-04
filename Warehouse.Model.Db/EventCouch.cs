@@ -46,7 +46,8 @@ namespace Warehouse.Model.Db
         public float Shirina { get; set; }
         [JsonProperty("Vysota")]
         public float Vysota { get; set; }
-
+        [JsonProperty("Data_priyoma_double")]
+        public double Data_priyoma_double { get; set; }
         [JsonProperty("Data_priyoma")]
         public DateTime? Data_priyoma { get; set; }
         [JsonProperty("Otkuda")]
