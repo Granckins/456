@@ -2,8 +2,7 @@
  
   <mat-accordion>
     <mat-expansion-panel>
-      <mat-expansion-panel-header (opened)="panelOpenState = true"
-                                  (closed)="panelOpenState = false">
+      <mat-expansion-panel-header  >
         <mat-panel-title>
           Контейнеры
         </mat-panel-title>
@@ -30,8 +29,7 @@
 
   <mat-accordion>
 
-    <mat-expansion-panel (opened)="panelOpenState = true"
-                         (closed)="panelOpenState = false" style="   margin-top: 1%;">
+    <mat-expansion-panel   style="   margin-top: 1%;">
       <mat-expansion-panel-header>
         <mat-panel-title>
           Учетные единицы
@@ -93,7 +91,7 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <mat-paginator #paginator [pageSizeOptions]="[5, 10, 25, 50, 100]" [showFirstLastButtons]="true" [length]="resultsLength" (page)="pageEvent = $event"  >
+      <mat-paginator #paginator [pageSizeOptions]="[5, 10, 25, 50, 100]" [showFirstLastButtons]="true" [length]="resultsLength"    >
       </mat-paginator>
 
       <div class="example-container mat-elevation-z8">
