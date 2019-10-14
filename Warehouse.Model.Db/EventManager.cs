@@ -57,15 +57,13 @@ namespace Warehouse.Model.Db
             list.Add(EC.Shirina.ToString());
             list.Add(EC.Vysota.ToString());
             list.Add(EC.Data_priyoma.ToString());
-            if (EC.Data_priyoma != null)
-                list.Add(EC.Data_priyoma.Value.Date == new DateTime(1, 1, 1).Date ? "" : EC.Data_priyoma.ToString());
-            else
-                list.Add("");
+            
+                list.Add(EC.Data_priyoma.ToString() );
+            
             list.Add(EC.Otkuda == "" ? null : EC.Otkuda);
-            if (EC.Data_vydachi != null)
-                list.Add(EC.Data_vydachi.Value.Date == new DateTime(1, 1, 1).Date ? "" : EC.Data_vydachi.ToString());
-            else
-                list.Add("");
+            
+                list.Add(EC.Data_vydachi.ToString() );
+ 
             list.Add(EC.Kuda == "" ? null : EC.Kuda);
             list.Add(EC.Nomer_plomby == "" ? null : EC.Nomer_plomby);
             list.Add(EC.Primechanie == "" ? null : EC.Primechanie);
@@ -73,7 +71,12 @@ namespace Warehouse.Model.Db
 
             return list;
         }
-       
+        static double ConvertToUnixTimestamp(DateTime date)
+        {
+            DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            TimeSpan diff = date - origin;
+            return Math.Floor(diff.TotalSeconds);
+        }
         public static EventCouch ConvertEventWarToEventCouchParent(EventWar e)
         {
             EventCouch EC = new EventCouch();
@@ -95,14 +98,14 @@ namespace Warehouse.Model.Db
             EC.Dlina = e.Длина;
             EC.Shirina = e.Ширина;
             EC.Vysota = e.Высота;
-            EC.Data_priyoma = e.Дата_приёма;
+            EC.Data_priyoma = ConvertToUnixTimestamp(e.Дата_приёма);
             EC.Otkuda = e.Откуда;
-            EC.Data_vydachi = e.Дата_выдачи;
+            EC.Data_vydachi = ConvertToUnixTimestamp(e.Дата_выдачи);
             EC.Kuda = e.Куда;
             EC.Nomer_plomby = e.Номер_пломбы;
             EC.Primechanie = e.Примечание;
             EC.Dobavil = e.Добавил;
-            EC.Data_ismenen = e.Дата_изменения;
+            EC.Data_ismenen = ConvertToUnixTimestamp(e.Дата_изменения);
             return EC;
         }
         public static EventCouchFull ConvertEventWarToEventCouchFullParent(EventWar e)
@@ -126,16 +129,17 @@ namespace Warehouse.Model.Db
             EC.Dlina = e.Длина;
             EC.Shirina = e.Ширина;
             EC.Vysota = e.Высота;
-            EC.Data_priyoma = e.Дата_приёма;
+            EC.Data_priyoma = ConvertToUnixTimestamp(e.Дата_приёма);
             EC.Otkuda = e.Откуда;
-            EC.Data_vydachi = e.Дата_выдачи;
+            EC.Data_vydachi = ConvertToUnixTimestamp(e.Дата_выдачи);
             EC.Kuda = e.Куда;
             EC.Nomer_plomby = e.Номер_пломбы;
             EC.Primechanie = e.Примечание;
             EC.Dobavil = e.Добавил;
-            EC.Data_ismenen = e.Дата_изменения;
+            EC.Data_ismenen = ConvertToUnixTimestamp(e.Дата_изменения);
             return EC;
         }
+        
         public static EventCouch ConvertEventCouchFullToEventCouch(EventCouchFull e)
         {
             EventCouch EC = new EventCouch();

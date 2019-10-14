@@ -45,15 +45,13 @@ namespace Warehouse.Model.Db
         [JsonProperty("Shirina")]
         public float Shirina { get; set; }
         [JsonProperty("Vysota")]
-        public float Vysota { get; set; }
-        [JsonProperty("Data_priyoma_double")]
-        public double Data_priyoma_double { get; set; }
+        public float Vysota { get; set; } 
         [JsonProperty("Data_priyoma")]
-        public DateTime? Data_priyoma { get; set; }
+        public double Data_priyoma { get; set; }
         [JsonProperty("Otkuda")]
         public string Otkuda { get; set; }
         [JsonProperty("Data_vydachi")]
-        public DateTime? Data_vydachi { get; set; }
+        public double Data_vydachi { get; set; } 
         [JsonProperty("Kuda")]
         public string Kuda { get; set; }
         [JsonProperty("Nomer_plomby")]
@@ -63,7 +61,7 @@ namespace Warehouse.Model.Db
         [JsonProperty("Dobavil")]
         public string Dobavil { get; set; }
         [JsonProperty("Data_ismenen")]
-        public DateTime Data_ismenen { get; set; }
+        public double Data_ismenen { get; set; } 
         public List<RevsInfo> _revs_info { get; set; }
         public EventCouch()
         {
@@ -88,18 +86,15 @@ namespace Warehouse.Model.Db
          (Sistema == null ? "" : Sistema).Replace(';', ',') + ";" +
              (Otvetstvennyj == null ? "" : Otvetstvennyj).Replace(';', ',') + ";" +
          (Prinadlezhnost == null ? "" : Prinadlezhnost).Replace(';', ',') + ";";
-            if (Data_priyoma != null)
-                str += (Data_priyoma.Value.Date == new DateTime(1, 1, 1).Date ? "" : Data_priyoma.Value.Day + "." + Data_priyoma.Value.Month + "." + Data_priyoma.Value.Year) + ";";
-            else
-                str += ";";
+            
+                str += (Data_priyoma) + ";";
+          
 
             str += (Otkuda == null ? "" : Otkuda).Replace(';', ',') + ";";
 
 
-            if (Data_vydachi != null)
-                str += (Data_vydachi.Value.Date == new DateTime(1, 1, 1).Date ? "" : Data_vydachi.Value.Day + "." + Data_vydachi.Value.Month + "." + Data_vydachi.Value.Year) + ";";
-            else
-                str += ";";
+            
+                str += (Data_vydachi) + ";"; 
 
             str += (Kuda == null ? "" : Kuda).Replace(';', ',') + ";" +
              (Nomer_plomby == null ? "" : Nomer_plomby).Replace(';', ',') + ";" +

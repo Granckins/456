@@ -71,12 +71,131 @@ namespace Warehouse.Core.Repositories
 
 
 
-            var url = "http://localhost:5984/_fti/local/users/_design/foo/by_username?q=UserName:" + "\"" + username + "\"^10";
+            var user = new User();
+            var lucene1 = new LuceneRequest<EventCouch>();
+            lucene1.rows = new List<Row<EventCouch>>();
+
+            var page = 1;
+            var limit = 20;
+            var skip = (page - 1) * limit;
+            var url = "http://localhost:5984/_fti/local/events/_design/searchdocuments/by_fields?q=archive:false" + "&skip=" + skip + "&limit=" + limit;
+
             Task<string> task = HTTP_GET(url);
             task.Wait();
-            var res= task.Result;
+            var res = task.Result;
+
+            var lucene11 = JsonConvert.DeserializeObject<LuceneRequest<EventWar>>(res);
+
+            foreach (var l in lucene11.rows)
+            {
+
+                EventCouch ev = new EventCouch();
+                ev = EventManager.ConvertEventWarToEventCouchParent(l.fields);
+
+
+                lucene1.rows.Add(new Row<EventCouch>() { id = l.id, fields = ev });
+            }
+            var total_rows = lucene11.total_rows;
+            int pages = total_rows / limit;
+            if (total_rows % limit > 0)
+                pages++;
+
+            CouchRequest<EventCouch> list = new CouchRequest<EventCouch>();
+
+            for (page = 1; page <= pages; page++)
+            {
+                skip = (page - 1) * limit;
+                url = "http://localhost:5984/_fti/local/events/_design/searchdocuments/by_fields?q=archive:false" + "&skip=" + skip + "&limit=" + limit;
+
+                task = HTTP_GET(url);
+                task.Wait();
+                res = task.Result;
+
+                lucene11 = JsonConvert.DeserializeObject<LuceneRequest<EventWar>>(res);
+                lucene1 = new LuceneRequest<EventCouch>();
+                lucene1.rows = new List<Row<EventCouch>>();
+                foreach (var l in lucene11.rows)
+                {
+
+                    EventCouch ev = new EventCouch();
+                    ev = EventManager.ConvertEventWarToEventCouchParent(l.fields);
+
+
+                    lucene1.rows.Add(new Row<EventCouch>() { id = l.id, fields = ev });
+                }
+                list = new CouchRequest<EventCouch>();
+
+
+                foreach (var r in lucene1.rows)
+                {
+                    list.rows.Add(r.fields);
+                    list.rows.Last()._id = r.id;
+
+                }
+
+                foreach (var r in list.rows)
+                {
+                    r.warehouse = "6ded85b9bca49078e3d47e1508000796";
+
+
+                    var json = JsonConvert.SerializeObject(r);
+                    var request = (HttpWebRequest)WebRequest.Create("http://localhost:5984/events/" + r._id);
+                    if (r._id=="47704e4bf3ed1cfb7b49c4359e024480")
+            {
+
+            }
+                    ServicePointManager.DefaultConnectionLimit = 1000;
+                    request.Credentials = new NetworkCredential("admin", "root");
+                    request.Method = "PUT";
+                    request.ContentType = "application/json";
+                    request.KeepAlive = false;
+                    using (var streamWriter = new StreamWriter(request.GetRequestStream()))
+                    {
+
+
+                        var o = (Newtonsoft.Json.Linq.JObject)JsonConvert.DeserializeObject(json);
+
+
+                        var json1 = JsonConvert.SerializeObject(o);
+
+                        streamWriter.Write(json1);
+
+                    }
+                    try
+                    {
+                        var httpResponse = (HttpWebResponse)request.GetResponse();
+                        using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                        {
+                            var responseText = streamReader.ReadToEnd();
+
+                            var response = JsonConvert.DeserializeObject<ResponseCouch>(responseText);
+
+                        }
+                    }
+                    catch (Exception e)
+                    {
+
+                    }
+
+                }
+
+
+
+
+
+
+            }
+
+
+
+
+
+              url = "http://localhost:5984/_fti/local/users/_design/foo/by_username?q=UserName:" + "\"" + username + "\"^10";
+             task = HTTP_GET(url);
+            task.Wait();
+               res= task.Result;
             
-           var user = new User();
+              user = new User();
            
             
                 var lucene = JsonConvert.DeserializeObject<LuceneRequest<User>>(res);
@@ -170,32 +289,7 @@ namespace Warehouse.Core.Repositories
                 list.total_rows = lucene.total_rows;
            
 
-                 foreach (var r in lucene1.rows)
-                {
-                   list.rows.Add( r.fields  );
-                    list.rows.Last()._id = r.id;
-                var mil = ConvertToUnixTimestamp(r.fields.Data_priyoma==null?new DateTime(): r.fields.Data_priyoma.Value);
-                //r.fields.Data_priyoma_double = mil;
-                //var json = JsonConvert.SerializeObject(r.fields);
-                //var request = (HttpWebRequest)WebRequest.Create("http://localhost:5984/events/" + r.id);
-
-                //ServicePointManager.DefaultConnectionLimit = 1000;
-
-                //request.Credentials = new NetworkCredential("admin", "root");
-                //request.Method = "PUT";
-                //request.ContentType = "application/json";
-                //request.KeepAlive = false;
-                //using (var streamWriter = new StreamWriter(request.GetRequestStream()))
-                //{
-
-                //    var o = (Newtonsoft.Json.Linq.JObject)JsonConvert.DeserializeObject(json);
-
-                //    var json1 = JsonConvert.SerializeObject(o);
-                //    streamWriter.Write(json1);
-
-                //}
-            }
-
+   
 
           //   url = "http://localhost:5984/_fti/local/warehouses/_design/searchdocuments/by_fields?q=archive:false";
  

@@ -46,11 +46,11 @@ namespace Warehouse.Model.Db
         public float Vysota { get; set; }
 
         [JsonProperty("Дата_приёма")]
-        public DateTime? Data_priyoma { get; set; }
+        public double Data_priyoma { get; set; }
         [JsonProperty("Откуда")]
         public string Otkuda { get; set; }
         [JsonProperty("Дата_выдачи")]
-        public DateTime? Data_vydachi { get; set; }
+        public double Data_vydachi { get; set; }
         [JsonProperty("Куда")]
         public string Kuda { get; set; }
         [JsonProperty("Номер_пломбы")]
@@ -60,7 +60,7 @@ namespace Warehouse.Model.Db
         [JsonProperty("Добавил")]
         public string Dobavil { get; set; }
         [JsonProperty("Дата_изменения")]
-        public DateTime Data_ismenen { get; set; }
+        public double Data_ismenen { get; set; }
         public List<RevsInfo> _revs_info { get; set; }
         public List<EventCouch> _revs { get; set; }
         public EventCouchFull()
