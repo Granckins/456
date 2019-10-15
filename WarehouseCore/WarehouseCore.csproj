@@ -37,6 +37,7 @@
 
   <ItemGroup>
     <None Remove="ClientApp\src\app\app-routing.module.ts" />
+    <None Remove="ClientApp\src\app\export\export.component.ts" />
     <None Remove="ClientApp\src\app\Interceptor\errorInterceptor.ts" />
     <None Remove="ClientApp\src\app\Interceptor\httpInterceptor.ts" />
     <None Remove="ClientApp\src\app\Login\login.component.ts" />
@@ -54,6 +55,7 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\app-routing.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\export\export.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\Interceptor\errorInterceptor.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\Interceptor\httpInterceptor.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\Login\login.component.ts" />

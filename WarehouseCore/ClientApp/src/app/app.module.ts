@@ -6,12 +6,12 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router'; 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
-
+ 
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
-
+import { ExportComponent } from './export/export.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
  
@@ -58,8 +58,7 @@ import {
   MatTreeModule,
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { LoginComponent } from './Login/login.component';
-
+import { LoginComponent } from './Login/login.component'; 
 
 import { httpInterceptor } from './Interceptor/httpInterceptor';
 import { ErrorInterceptor } from './Interceptor/errorInterceptor';
@@ -73,6 +72,7 @@ import { AuthenticationService } from './Services/authentication.service';
     AppComponent,
     NavMenuComponent,
     HomeComponent,
+    ExportComponent,
     CounterComponent,
     FetchDataComponent,
     LoginComponent
@@ -125,6 +125,7 @@ import { AuthenticationService } from './Services/authentication.service';
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full', canActivate: [AuthorizationCheck] },
       { path: 'home', component: HomeComponent, pathMatch: 'full', canActivate: [AuthorizationCheck] },
+      { path: 'export', component: ExportComponent, pathMatch: 'full', canActivate: [AuthorizationCheck] },
       { path: 'counter', component: CounterComponent, canActivate: [AuthorizationCheck] },
       { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizationCheck] },
       { path: 'login', component: LoginComponent }
