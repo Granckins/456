@@ -64,6 +64,8 @@ namespace Warehouse.Model.Db
         public string Куда { get; set; }
         [JsonProperty("Номер_пломбы")]
         public string Номер_пломбы { get; set; }
+        [JsonProperty("Содержимое")]
+        public string Содержимое { get; set; }
         [JsonProperty("Примечание")]
         public string Примечание { get; set; }
         [JsonProperty("Добавил")]

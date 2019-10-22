@@ -25,7 +25,7 @@ namespace Warehouse.Model.Db
                     {
                         if (e.Наименование_составной_единицы != "")
                         {
-                            
+                            EC.Soderzhimoe.Add(ConvertEventWarToSubEvent(e));
                         }
 
                     }
@@ -77,6 +77,15 @@ namespace Warehouse.Model.Db
             TimeSpan diff = date - origin;
             return Math.Floor(diff.TotalSeconds);
         }
+        public static List<string> ToListSoder(EventCouch EC)
+        {
+            var list = new List<string>();
+            foreach (var c in EC.Soderzhimoe)
+            {
+                list.Add(c.ToStringNew());
+            }
+            return list;
+        }
         public static EventCouch ConvertEventWarToEventCouchParent(EventWar e)
         {
             EventCouch EC = new EventCouch();
@@ -90,6 +99,7 @@ namespace Warehouse.Model.Db
             EC.Oboznachenie = e.Обозначение; 
             EC.Sistema = e.Система;
             EC.Prinadlezhnost = e.Принадлежность;
+            EC.Soderzhimoe = new List<SubEvent>();
             EC.Stoimost = e.Стоимость;
             EC.Otvetstvennyj = e.Ответственный;
             EC.Mestonahozhdenie_na_sklade = e.Местонахождение_на_складе;
@@ -153,6 +163,8 @@ namespace Warehouse.Model.Db
             EC.Oboznachenie = e.Oboznachenie; 
             EC.Sistema = e.Sistema;
             EC.Prinadlezhnost = e.Prinadlezhnost;
+            EC.Soderzhimoe = new List<SubEvent>();
+            EC.Soderzhimoe = e.Soderzhimoe;
             EC.Stoimost = e.Stoimost;
             EC.Otvetstvennyj = e.Otvetstvennyj;
             EC.Mestonahozhdenie_na_sklade = e.Mestonahozhdenie_na_sklade;
@@ -171,7 +183,15 @@ namespace Warehouse.Model.Db
             EC.Data_ismenen = e.Data_ismenen;
             return EC;
         }
+        private static SubEvent ConvertEventWarToSubEvent(EventWar e)
+        {
+            SubEvent SE = new SubEvent();
 
-         
+            SE.Naimenovanie_sostavnoj_edinicy = e.Наименование_составной_единицы;
+            SE.Oboznachenie_sostavnoj_edinicy = e.Обозначение_составной_единицы;
+            SE.Kolichestvo_sostavnyh_edinic = e.Количество_составных_единиц;
+            return SE;
+        }
+
     }
 }
