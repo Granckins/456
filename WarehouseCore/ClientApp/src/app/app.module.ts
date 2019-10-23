@@ -5,8 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router'; 
 import { AppComponent } from './app.component';
-import { NavMenuComponent } from './nav-menu/nav-menu.component';
- 
+import { NavMenuComponent } from './nav-menu/nav-menu.component'; 
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
@@ -20,7 +19,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
  
 
 import {
-  MatAutocompleteModule,
+  MatAutocompleteModule, 
   MatBadgeModule,
   MatBottomSheetModule,
   MatButtonModule,
@@ -61,11 +60,11 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { LoginComponent } from './Login/login.component'; 
 
 import { httpInterceptor } from './Interceptor/httpInterceptor';
-import { ErrorInterceptor } from './Interceptor/errorInterceptor';
-import { downloadFile } from 'file-saver';
+import { ErrorInterceptor } from './Interceptor/errorInterceptor'; 
 import { getRusPaginatorIntl } from './rus-paginator-intl';
 import { AuthorizationCheck } from './Services/authorizationCheck'; 
 import { DataSetService } from './Services/home.service';
+import { ExportService } from './Services/export.service';
 import { AuthenticationService } from './Services/authentication.service';
 @NgModule({
   declarations: [
@@ -80,8 +79,7 @@ import { AuthenticationService } from './Services/authentication.service';
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
-    HttpClientModule,
-    downloadFile
+    HttpClientModule, 
     FormsModule,
     BrowserAnimationsModule,
     NoopAnimationsModule,
@@ -136,7 +134,7 @@ import { AuthenticationService } from './Services/authentication.service';
     { provide: HTTP_INTERCEPTORS, useClass: httpInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: MatPaginatorIntl, useValue: getRusPaginatorIntl() }, 
-    AuthorizationCheck, AuthenticationService, DataSetService],
+    AuthorizationCheck, AuthenticationService, DataSetService, ExportService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

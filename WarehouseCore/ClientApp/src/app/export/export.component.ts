@@ -1,7 +1,8 @@
 import { Component, OnInit, InjectionToken } from '@angular/core'; 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { downloadFile } from 'file-saver';
+import { saveAs as importedSaveAs } from "file-saver";
 import { ExportService } from '../Services/export.service';
+
 @Component({
   selector: 'export-data',
   templateUrl: 'export.component.html',
@@ -28,7 +29,7 @@ export class ExportComponent implements OnInit {
       .download()
       .subscribe(
         blob => {
-          downloadFile(blob, 'WeeklySummary.json');
+          importedSaveAs(blob, 'WeeklySummary.json');
         },
         error => {
           console.log("Something went wrong");
