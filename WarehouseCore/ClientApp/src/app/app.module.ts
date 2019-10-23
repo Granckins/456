@@ -62,7 +62,7 @@ import { LoginComponent } from './Login/login.component';
 
 import { httpInterceptor } from './Interceptor/httpInterceptor';
 import { ErrorInterceptor } from './Interceptor/errorInterceptor';
-
+import { downloadFile } from 'file-saver';
 import { getRusPaginatorIntl } from './rus-paginator-intl';
 import { AuthorizationCheck } from './Services/authorizationCheck'; 
 import { DataSetService } from './Services/home.service';
@@ -81,6 +81,7 @@ import { AuthenticationService } from './Services/authentication.service';
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
+    downloadFile
     FormsModule,
     BrowserAnimationsModule,
     NoopAnimationsModule,
