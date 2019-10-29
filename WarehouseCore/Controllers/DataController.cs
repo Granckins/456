@@ -28,8 +28,8 @@ namespace WarehouseCore.Controllers
 
             return res1;
         }
-         [HttpPost ]
-        public async Task<FileContentResult> ExportData(string fileName)
+        [HttpPost("[action]")]
+        public  FileContentResult  ExportData()
         {
             var res1 = new CouchRequest<EventCouchFull>();
             res1 = Repository.GetAllEvents();
@@ -39,26 +39,6 @@ namespace WarehouseCore.Controllers
 
             return File(contents, "application/json", "test.json");
         }
-        //[HttpPost("[action]")]
-        //public FileContentResult ExportData( )
-        //{
-
-        //    var res1 = new CouchRequest<EventCouchFull>();
-
-        //        res1 = Repository.GetAllEvents();
-
-        //    //foreach (var rr in res1.rows)
-        //    //{
-        //    //    var revs = Repository.GetRevisionListEvent(rr._id);
-        //    //    var r1 = Repository.GetRevisionFiesldsEvent(rr._id, revs);
-        //    //    rr.value._revs = r1.ToEventCouch();
-        //    //    rr.value._id = rr.id;
-        //    //}
-        //    string output = JsonConvert.SerializeObject(res1.rows);
-        //    byte[] contents = System.Text.Encoding.UTF8.GetBytes(output);
-
-        //    return File(contents, "application/json", "test.json");
-
-        //}
+       
     }
 }

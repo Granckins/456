@@ -1,6 +1,7 @@
  
 import { Injectable } from '@angular/core'; 
 import { HttpClient } from '@angular/common/http';
+import { Http, ResponseContentType } from '@angular/http';
 import { Observable } from 'rxjs';
  
 @Injectable()
@@ -12,7 +13,7 @@ export class ExportService {
     const requestUrl =
       `${href}`;
     return this.http.post<Blob>(requestUrl,  
-      { responseType: 'blob' as 'json' });
+      { responseType:   ResponseContentType.Blob  });
   }
 
 
