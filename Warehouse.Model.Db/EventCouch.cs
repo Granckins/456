@@ -29,8 +29,7 @@ namespace Warehouse.Model.Db
         public string Sistema { get; set; }
         [JsonProperty("Prinadlezhnost")]
         public string Prinadlezhnost { get; set; }
-        [JsonProperty("Содержимое")]
-        public List<SubEvent> Soderzhimoe { get; set; }
+
         [JsonProperty("Stoimost")]
         public float Stoimost { get; set; }
         [JsonProperty("Otvetstvennyj")]
@@ -67,20 +66,14 @@ namespace Warehouse.Model.Db
         public EventCouch()
         {
             _revs_info = new List<RevsInfo>();
-            Soderzhimoe = new List<SubEvent>();
+           
             this.archive = false;
         }
         public string ToString()
         {
             var sod = "";
             var str = "";
-            foreach (var s in Soderzhimoe)
-            {
-                sod += " (Наименование:" + (s.Naimenovanie_sostavnoj_edinicy == null ? "" : s.Naimenovanie_sostavnoj_edinicy).Replace(';', ',')
-                    + ", Обозначение:"
-                    + (s.Oboznachenie_sostavnoj_edinicy == null ? "" : s.Oboznachenie_sostavnoj_edinicy).Replace(';', ',') + ", Количество:"
-                    + s.Kolichestvo_sostavnyh_edinic + ")";
-            }
+           
 
 
             str = Nomer_upakovki.ToString().Replace(';', ',') + ";" +
@@ -88,7 +81,6 @@ namespace Warehouse.Model.Db
           (Zavodskoj_nomer == null ? "" : Zavodskoj_nomer).Replace(';', ',') + ";" +
               Kolichestvo.ToString().Replace(';', ',') + ";" +
                  (Mestonahozhdenie_na_sklade == null ? "" : Mestonahozhdenie_na_sklade).Replace(';', ',') + ";" +
-
           (Oboznachenie == null ? "" : Oboznachenie).Replace(';', ',') + ";" +
          sod + ";" +
          (Sistema == null ? "" : Sistema).Replace(';', ',') + ";" +

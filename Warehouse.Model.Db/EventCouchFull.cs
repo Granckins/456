@@ -44,8 +44,7 @@ namespace Warehouse.Model.Db
         public float Shirina { get; set; }
         [JsonProperty("Высота")]
         public float Vysota { get; set; }
-        [JsonProperty("Содержимое")]
-        public List<SubEvent> Soderzhimoe { get; set; }
+
         [JsonProperty("Дата_приёма")]
         public double Data_priyoma { get; set; }
         [JsonProperty("Откуда")]
@@ -66,8 +65,7 @@ namespace Warehouse.Model.Db
         public List<EventCouch> _revs { get; set; }
         public EventCouchFull()
         {
-            _revs_info = new List<RevsInfo>();
-            Soderzhimoe = new List<SubEvent>();
+            _revs_info = new List<RevsInfo>(); 
             _revs = new List<EventCouch>();
             this.archive = false;
         }
