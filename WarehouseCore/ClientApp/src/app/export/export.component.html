@@ -12,19 +12,16 @@
           </mat-checkbox>
 
           <div>
-            <!--<button mat-button matStepperNext>Далее</button>-->
-            <button  mat-button (click)="goForward(stepper)" >Back</button>
+            <button mat-button matStepperNext>Далее</button>
           </div>
         </form>
       </mat-step>
       <mat-step [stepControl]="secondFormGroup">
         <form [formGroup]="secondFormGroup">
           <ng-template matStepLabel>Выгрузка</ng-template>
-          <div class="progress-loader" [hidden]="!loading">
-
+          <div class="overlay">
             <mat-progress-spinner [mode]="'indeterminate'">
             </mat-progress-spinner>
-
           </div>
           <div>
             <!--<button mat-button matStepperPrevious>Back</button>-->
