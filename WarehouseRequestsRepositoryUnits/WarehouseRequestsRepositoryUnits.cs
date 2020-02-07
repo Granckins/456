@@ -287,27 +287,32 @@ namespace Warehouse.Core.Repositories
                     lucene1.rows.Add(new Row<EventCouch>() { id = l.id, fields = ev });
                 }
                 list.total_rows = lucene.total_rows;
-           
 
-   
 
-          //   url = "http://localhost:5984/_fti/local/warehouses/_design/searchdocuments/by_fields?q=archive:false";
- 
-          //  task = HTTP_GET(url);
-          //  task.Wait();
-          // res = task.Result;
 
-          //var  lucene123 = JsonConvert.DeserializeObject<LuceneRequest<Warehouse.Model.Db.Warehouse>>(res);
 
-     
+            //   url = "http://localhost:5984/_fti/local/warehouses/_design/searchdocuments/by_fields?q=archive:false";
 
-          //  foreach (var r in lucene123.rows)
-          //  {
-          //      r.fields.id = r.id;
-          //      list.wars.Add(r.fields); 
-          //  }
+            //  task = HTTP_GET(url);
+            //  task.Wait();
+            // res = task.Result;
 
-            return list;
+            //var  lucene123 = JsonConvert.DeserializeObject<LuceneRequest<Warehouse.Model.Db.Warehouse>>(res);
+
+
+
+            //  foreach (var r in lucene123.rows)
+            //  {
+            //      r.fields.id = r.id;
+            //      list.wars.Add(r.fields); 
+            //  }
+            foreach (var r in lucene1.rows)
+            {
+
+                list.rows.Add(r.fields);
+            }
+
+            return list; 
 
         }
         static double ConvertToUnixTimestamp(DateTime date)
