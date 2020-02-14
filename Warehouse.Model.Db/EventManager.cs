@@ -57,8 +57,8 @@ namespace Warehouse.Model.Db
             list.Add(EC.Shirina.ToString());
             list.Add(EC.Vysota.ToString());
             list.Add(EC.Data_priyoma.ToString());
-            
-                list.Add(EC.Data_priyoma.ToString() );
+            list.Add(EC.parent_id.ToString());
+            list.Add(EC.Data_priyoma.ToString() );
             
             list.Add(EC.Otkuda == "" ? null : EC.Otkuda);
             
@@ -98,6 +98,7 @@ namespace Warehouse.Model.Db
             EC.Dlina = e.Длина;
             EC.Shirina = e.Ширина;
             EC.Vysota = e.Высота;
+            EC.parent_id = e.parent_id;
             EC.Data_priyoma = ConvertToUnixTimestamp(e.Дата_приёма);
             EC.Otkuda = e.Откуда;
             EC.Data_vydachi = ConvertToUnixTimestamp(e.Дата_выдачи);
@@ -128,6 +129,7 @@ namespace Warehouse.Model.Db
             EC.Ves_netto = e.Вес_нетто;
             EC.Dlina = e.Длина;
             EC.Shirina = e.Ширина;
+            EC.parent_id = e.parent_id;
             EC.Vysota = e.Высота;
             EC.Data_priyoma = ConvertToUnixTimestamp(e.Дата_приёма);
             EC.Otkuda = e.Откуда;
@@ -158,6 +160,7 @@ namespace Warehouse.Model.Db
             EC.Mestonahozhdenie_na_sklade = e.Mestonahozhdenie_na_sklade;
             EC.Ves_brutto = e.Ves_brutto;
             EC.Ves_netto = e.Ves_netto;
+            EC.parent_id = e.parent_id;
             EC.Dlina = e.Dlina;
             EC.Shirina = e.Shirina;
             EC.Vysota = e.Vysota;

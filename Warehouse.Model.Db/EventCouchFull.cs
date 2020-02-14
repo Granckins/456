@@ -21,7 +21,10 @@ namespace Warehouse.Model.Db
         public string Zavodskoj_nomer { get; set; }
         [JsonProperty("Количество")]
         public int Kolichestvo { get; set; }
+        [JsonProperty("parent_id")]
+        public string parent_id { get; set; }
         [JsonProperty("Обозначение")]
+
         public string Oboznachenie { get; set; } 
         [JsonProperty("Система")]
         public string Sistema { get; set; }

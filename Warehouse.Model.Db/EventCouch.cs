@@ -29,7 +29,8 @@ namespace Warehouse.Model.Db
         public string Sistema { get; set; }
         [JsonProperty("Prinadlezhnost")]
         public string Prinadlezhnost { get; set; }
-
+        [JsonProperty("parent_id")]
+        public string parent_id { get; set; }
         [JsonProperty("Stoimost")]
         public float Stoimost { get; set; }
         [JsonProperty("Otvetstvennyj")]
