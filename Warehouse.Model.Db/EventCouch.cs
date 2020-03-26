@@ -13,8 +13,8 @@ namespace Warehouse.Model.Db
         public string _rev { get; set; }
         [JsonProperty("_id")]
         public string _id { get; set; }
-        [JsonProperty("warehouse")]
-        public string warehouse { get; set; }
+        [JsonProperty("warehouse_id")]
+        public string warehouse_id { get; set; } 
         [JsonProperty("Nomer_upakovki")]
         public int Nomer_upakovki { get; set; }
         [JsonProperty("Naimenovanie_izdeliya")]
@@ -77,7 +77,7 @@ namespace Warehouse.Model.Db
            
 
 
-            str = Nomer_upakovki.ToString().Replace(';', ',') + ";" +
+            str = Nomer_upakovki.ToString().Replace(';', ',') + ";" + warehouse_id.ToString().Replace(';', ',') + ";"+
              (Naimenovanie_izdeliya == null ? "" : Naimenovanie_izdeliya).Replace(';', ',') + ";" +
           (Zavodskoj_nomer == null ? "" : Zavodskoj_nomer).Replace(';', ',') + ";" +
               Kolichestvo.ToString().Replace(';', ',') + ";" +

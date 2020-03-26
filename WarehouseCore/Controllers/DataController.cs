@@ -21,7 +21,7 @@ namespace WarehouseCore.Controllers
 
 
             //Repository.Update();
-            res1 = Repository.GetFilterSortDocuments( filter,  pagesize,  sort,  order,  page, "");
+            res1 = Repository.GetFilterSortDocuments( filter,  pagesize,  sort,  order,  page, warehouse);
 
 
             return res1;

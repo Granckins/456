@@ -14,6 +14,7 @@ exports.Warehouse = Warehouse;
 var EventCouch = /** @class */ (function () {
     function EventCouch() {
         this._revs_info = new Array();
+        this.wars = new Array();
         this.expand = false;
     }
     return EventCouch;

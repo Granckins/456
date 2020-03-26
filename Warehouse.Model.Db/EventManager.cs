@@ -45,7 +45,7 @@ namespace Warehouse.Model.Db
             list.Add(EC.Zavodskoj_nomer == "" ? null : EC.Zavodskoj_nomer);
             list.Add(EC.Kolichestvo.ToString());
             list.Add(EC.Oboznachenie == "" ? null : EC.Oboznachenie);
-
+            list.Add(EC.warehouse_id == "" ? null : EC.warehouse_id);
             list.Add(EC.Sistema == "" ? null : EC.Sistema);
             list.Add(EC.Prinadlezhnost == "" ? null : EC.Prinadlezhnost);
             list.Add(EC.Stoimost.ToString());
@@ -83,6 +83,7 @@ namespace Warehouse.Model.Db
             EC._rev = e._rev;
             EC._id = e._id;
             EC.archive = e.archive;
+            EC.warehouse_id = e.warehouse_id;
             EC.Nomer_upakovki = e.Номер_упаковки;
             EC.Naimenovanie_izdeliya = e.Наименование_изделия;
             EC.Zavodskoj_nomer = e.Заводской_номер;
@@ -115,6 +116,7 @@ namespace Warehouse.Model.Db
             EC._rev = e._rev;
             EC._id = e._id;
             EC.archive = e.archive;
+            EC.warehouse_id = e.warehouse_id;
             EC.Nomer_upakovki = e.Номер_упаковки;
             EC.Naimenovanie_izdeliya = e.Наименование_изделия;
             EC.Zavodskoj_nomer = e.Заводской_номер;
@@ -148,6 +150,7 @@ namespace Warehouse.Model.Db
             EC._rev = e._rev;
             EC._id = e._id;
             EC.archive = e.archive;
+            EC.warehouse_id = e.warehouse_id;
             EC.Nomer_upakovki = e.Nomer_upakovki;
             EC.Naimenovanie_izdeliya = e.Naimenovanie_izdeliya;
             EC.Zavodskoj_nomer = e.Zavodskoj_nomer;

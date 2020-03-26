@@ -37,6 +37,7 @@ export class EventCouch  {
   Dobavil: string;
   Data_ismenen: Data;
   _revs_info: Array<RevsInfo> = new Array();
+  wars: Array<Warehouse> = new Array();
   expand:boolean;
   constructor() {
     this.expand = false;

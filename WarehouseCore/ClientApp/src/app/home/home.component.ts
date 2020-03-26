@@ -90,7 +90,7 @@ export class HomeComponent implements AfterViewInit {
           this.isRateLimitReached = true;
           return observableOf([]);
         })
-      ).subscribe(data => this.data = data, wars => this.wars);
+    ).subscribe(data => this.data = data);
   }
 
   expandRow(e: EventCouch) {
@@ -195,6 +195,11 @@ export class HomeComponent implements AfterViewInit {
     }
     else return true;
 
+  }
+  onMatChipKeyPress (event) {
+    if (event.keyCode === 8) {
+      event.stopImmediatePropagation();
+    }
   }
   selected(event: MatAutocompleteSelectedEvent): void {
     this.fruits.push({ name: event.option.viewValue, value: '', id: this.fruits.length });

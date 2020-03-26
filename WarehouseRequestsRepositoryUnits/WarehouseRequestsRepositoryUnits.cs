@@ -225,10 +225,33 @@ namespace Warehouse.Core.Repositories
             else
                 return new UserIdentity { UserId = "000000000000000000000000" };
         }
+   
+        public List<Warehouses> GetWarehouses()
+        {
+            CouchRequest<Warehouses> list = new CouchRequest<Warehouses>();
+            var url = "http://127.0.0.1:5984/_fti/local/warehouse/_design/searchwarehouse/by_flag?q=flag:1";
+            var user = new User();
+            var lucene1 = new List<Warehouses> ();
 
+            Task<string> task = HTTP_GET(url);
+            task.Wait();
+            var res = task.Result;
+            var lucene = JsonConvert.DeserializeObject<LuceneRequest<Warehouses>>(res);
+            foreach (var l in lucene.rows)
+            {
 
+                Warehouses ev = new Warehouses();
+                ev =  l.fields;
+                ev._id = l.id;
+
+                lucene1.Add(ev);
+            }
+           
+            return lucene1;
+        }
         public CouchRequest<EventCouch> GetFilterSortDocuments(string filter="", int pagesize=10, string sort="Номер_упаковки", string order="", int page=0, string warehouse="")
         {
+             
             CouchRequest<EventCouch> list = new CouchRequest<EventCouch>();
           var  limit = pagesize;
             var skip = (page -1) * limit;
@@ -261,6 +284,9 @@ namespace Warehouse.Core.Repositories
 
             if (warehouse == null||warehouse=="")
                 warehouse = "";
+            else
+                if (warehouse=="")
+                q = "(" + q + ")" ;
             else
             q = "(" + q+")"+" AND "+"warehouse:"+warehouse;
 
@@ -311,7 +337,7 @@ namespace Warehouse.Core.Repositories
 
                 list.rows.Add(r.fields);
             }
-
+            list.wars = GetWarehouses();
             return list; 
 
         }
@@ -385,7 +411,7 @@ namespace Warehouse.Core.Repositories
             int i = 0;
             foreach (var r in list.rows)
             {
-                r.warehouse = "6ded85b9bca49078e3d47e1508000796";
+                r.warehouse_id = "91af1930ecfb96fcc19ae7689c000689";
 
                 //var id1 = "";
 

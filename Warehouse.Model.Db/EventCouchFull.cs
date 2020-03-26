@@ -13,6 +13,8 @@ namespace Warehouse.Model.Db
         public string _rev { get; set; }
         [JsonProperty("_id")]
         public string _id { get; set; }
+        [JsonProperty("warehouse_id")]
+        public string warehouse_id { get; set; }
         [JsonProperty("Номер_упаковки")]
         public int Nomer_upakovki { get; set; }
         [JsonProperty("Наименование_изделия")]
