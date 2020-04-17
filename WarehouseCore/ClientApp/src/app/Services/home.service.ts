@@ -13,7 +13,7 @@ export class DataSetService {
   getUser(filter: string, pagesize: number, sort: string, order: string, page: number, warehouse: string): Observable<CouchRequest<EventCouch>> {
     const href = 'api/Data/FilterSortDocument';
     const requestUrl =
-      `${href}?filter=${filter}&pagesize=${pagesize}&sort=${sort}&order=${order}&page=${page + 1}&warehouse=0c10434f556fc0505690e70567000ff3`;
+      `${href}?filter=${filter}&pagesize=${pagesize}&sort=${sort}&order=${order}&page=${page + 1}&warehouse=${warehouse}`;
     return this.http.get<CouchRequest<EventCouch>>(requestUrl);
   }
 
