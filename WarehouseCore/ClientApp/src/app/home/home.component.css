@@ -23,7 +23,10 @@ table {
   overflow: auto;
 }
 
- 
+.mat-form-field {
+  font-size: 14px;
+  width: 50%;
+}
 .mat-table-sticky:first-child {
   border-right: 1px solid #e0e0e0;
 }

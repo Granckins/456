@@ -41,6 +41,7 @@
   <ItemGroup>
     <None Remove="ClientApp\src\app\app-routing.module.ts" />
     <None Remove="ClientApp\src\app\export\export.component.ts" />
+    <None Remove="ClientApp\src\app\filter-template\filter-template.component.ts" />
     <None Remove="ClientApp\src\app\Interceptor\errorInterceptor.ts" />
     <None Remove="ClientApp\src\app\Interceptor\httpInterceptor.ts" />
     <None Remove="ClientApp\src\app\Login\login.component.ts" />
@@ -62,6 +63,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\Interceptor\errorInterceptor.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\Interceptor\httpInterceptor.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\Login\login.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\filter-template\filter-template.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\Models\home.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\polyfills.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\rus-paginator-intl.ts" />

@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
  
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { TableFilteringExample } from './filter-template/filter-template.component';
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
@@ -75,7 +76,8 @@ import { AuthenticationService } from './Services/authentication.service';
     ExportComponent,
     CounterComponent,
     FetchDataComponent,
-    LoginComponent
+    LoginComponent,
+    TableFilteringExample
 
   ],
   imports: [
@@ -127,7 +129,7 @@ import { AuthenticationService } from './Services/authentication.service';
       { path: 'home', component: HomeComponent, pathMatch: 'full', canActivate: [AuthorizationCheck] },
       { path: 'export', component: ExportComponent, pathMatch: 'full', canActivate: [AuthorizationCheck] },
       { path: 'counter', component: CounterComponent, canActivate: [AuthorizationCheck] },
-      { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizationCheck] },
+      { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizationCheck] }, 
       { path: 'login', component: LoginComponent }
     ])
   ],
@@ -136,6 +138,7 @@ import { AuthenticationService } from './Services/authentication.service';
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: MatPaginatorIntl, useValue: getRusPaginatorIntl() }, 
     AuthorizationCheck, AuthenticationService, DataSetService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [TableFilteringExample]  
 })
 export class AppModule { }

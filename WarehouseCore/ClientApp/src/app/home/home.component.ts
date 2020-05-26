@@ -1,5 +1,5 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
-import { DataSetService } from '../Services/home.service';
+import { DataSetService } from '../Services/home.service'; 
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 
 import { MatPaginator, MatSort, MatTableDataSource, MatPaginatorIntl  } from '@angular/material';
@@ -13,6 +13,28 @@ import { ElementRef} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent, MatChipInputEvent, MatAutocomplete } from '@angular/material';
 
+export const CONDITIONS_LIST = [
+  { value: "nono", label: "Nono" },
+  { value: "is-empty", label: "Is empty" },
+  { value: "is-not-empty", label: "Is not empty" },
+  { value: "is-equal", label: "Is equal" },
+  { value: "is-not-equal", label: "Is not equal" }
+];
+
+export const CONDITIONS_FUNCTIONS = { // search method base on conditions list value
+  "is-empty": function (value, filterdValue) {
+    return value === "";
+  },
+  "is-not-empty": function (value, filterdValue) {
+    return value !== "";
+  },
+  "is-equal": function (value, filterdValue) {
+    return value == filterdValue;
+  },
+  "is-not-equal": function (value, filterdValue) {
+    return value != filterdValue;
+  }
+};
 export interface Fruit {
   name: string;
   value: string;
