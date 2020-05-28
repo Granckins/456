@@ -54,7 +54,7 @@ export interface Fruit {
 })
 export class HomeComponent implements AfterViewInit {
   wars: Warehouse[] = [];
-  displayedColumns: string[] = ['Nomer_upakovki', 'Naimenovanie_izdeliya', 'Zavodskoj_nomer', 'Kolichestvo', 'Mestonahozhdenie_na_sklade'
+    displayedColumns: string[] = ['actions','Nomer_upakovki', 'Naimenovanie_izdeliya', 'Zavodskoj_nomer', 'Kolichestvo', 'Mestonahozhdenie_na_sklade'
     , 'Oboznachenie', 'Sistema', 'Otvetstvennyj', 'Prinadlezhnost', 'Data_priyoma', 'Otkuda', 'Data_vydachi', 'Kuda', 'Nomer_plomby',
     'Stoimost', 'Ves_brutto', 'Ves_netto', 'Dlina', 'Shirina', 'Vysota', 'Primechanie', 'Dobavil', 'Data_ismenen'];
   exampleDatabase: DataSetService | null;

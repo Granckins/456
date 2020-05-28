@@ -10,6 +10,7 @@ export class Warehouse {
   id: string;
 }
 export class EventCouch  {
+    actions: boolean;
   archive: boolean;
   _rev: string;
   _id: string;

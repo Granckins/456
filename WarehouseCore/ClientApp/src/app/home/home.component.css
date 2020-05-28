@@ -4,7 +4,18 @@
   max-height: -webkit-fill-available;
   
 }
+.mat-form-field-label {
+  white-space: normal;
+}
 
+textarea.mat-input-element {
+  padding: 0px 0;
+  margin: 5px 0;
+}
+
+.mat-input-placeholder {
+  white-space: normal;
+}
 .mat-paginator-container {
   justify-content: flex-start !important; 
 }
@@ -16,7 +27,11 @@ table {
   font-size: 14px;
   width: 100%;
 }
-
+example-button-container {
+  display: flex;
+  justify-content: center;
+  width: 120px;
+}
 
 .example-container1 {
   max-height: -webkit-fill-available;

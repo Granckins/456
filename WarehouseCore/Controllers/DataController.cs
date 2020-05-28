@@ -13,6 +13,8 @@ namespace WarehouseCore.Controllers
     public class DataController : Controller
     {
         WarehouseRequestsRepositoryUnits Repository = new WarehouseRequestsRepositoryUnits();
+
+        
         [HttpGet("[action]")]
         public CouchRequest<EventCouch> FilterSortDocument(string filter, int pagesize, string sort  , string order  ,int page, string warehouse  )
         {

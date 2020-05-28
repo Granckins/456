@@ -37,8 +37,25 @@
         <mat-panel-description>
           Работа с учетными еденицами
         </mat-panel-description>
-      </mat-expansion-panel-header> 
+      </mat-expansion-panel-header>
+      <mat-form-field class="example-chip-list">
+        <mat-chip-list #chipList required>
+          <input placeholder="Поиск по"
+                 #fruitInput
+                 [formControl]="fruitCtrl"
+                 [matAutocomplete]="auto"
+                 [matChipInputFor]="chipList"
+                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                 [matChipInputAddOnBlur]="addOnBlur"
+                 (matChipInputTokenEnd)="add($event)">
+        </mat-chip-list>
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
 
+          <mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit">
+            {{fruit}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
       <div class="text-inside" style="text-align: left; margin-bottom: 10px;">
 
         <mat-chip class="outside"
@@ -70,26 +87,42 @@
           </mat-select>
         </mat-form-field>
       </div>
+      <div class="text-inside" style="text-align: left; margin-bottom: 10px;">
+        <button mat-icon-button aria-label="Example icon button with a vertical three dot icon">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
       <mat-paginator #paginator [pageSizeOptions]="[5, 10, 25, 50, 100]" [showFirstLastButtons]="true" [length]="resultsLength">
       </mat-paginator>
 
       <div class="example-container mat-elevation-z8">
 
 
-         
+
 
 
 
         <table mat-table [dataSource]="data" multiTemplateDataRows
                class="example-table" cdkDropList #table1="cdkDropList"
                matSort matSortActive="Номер_упаковки" matSortDisableClear matSortDirection="desc">
-
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>
+              Actions
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button aria-label="Редактировать">
+                <mat-icon>edite</mat-icon>
+              </button>
+            </td>
+          </ng-container>
           <ng-container matColumnDef="Nomer_upakovki">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header="Номер_упаковки" disableClear>
-             Номер упаковки 
+            <th mat-header-cell *matHeaderCellDef disableClear mat-sort-header="Номер_упаковки">
+              <div >
+                Номер упаковки
+              </div>
               <div>
                 <mat-form-field>
-                  <input matInput class="form-field" [formControl]="positionFilter" placeholder="Postion Filter">
+                  <input matInput class="form-field" [formControl]="Nomer_upakovki">
                 </mat-form-field>
               </div>
             </th>
