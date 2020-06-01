@@ -1,0 +1,25 @@
+{
+  "name": "456",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "@angular-devkit/build-angular": "^0.901.7",
+    "node-gyp": "^5.1.1",
+    "node-sass": "^4.14.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Granckins/456.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Granckins/456/issues"
+  },
+  "homepage": "https://github.com/Granckins/456#readme"
+}
