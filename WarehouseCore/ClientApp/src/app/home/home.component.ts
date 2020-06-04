@@ -46,7 +46,7 @@ export interface Fruit {
   styleUrls: ['./home.component.css'],
   animations: [
     trigger('detailExpand', [
-      state('collapsed', style({ height: '0px', minHeight: '0', display: 'none' })),
+      state('collapsed', style({ height: '0px', minHeight: '0', display: 'none' })),    
       state('expanded', style({ height: '*' })),
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
@@ -67,9 +67,9 @@ export class HomeComponent implements AfterViewInit {
   isRateLimitReached = false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-
+  dataSource = new MatTableDataSource(this.data);
   expandedElement: EventCouch | null;
   expandedRow: number;
 
@@ -83,7 +83,9 @@ export class HomeComponent implements AfterViewInit {
       startWith(null),
       map((fruit: string | null) => fruit ? this._filter(fruit) : this.allFruits.slice()));
   }
-
+  ngOnInit() {
+    this.dataSource.sort = this.sort;
+  }
   ngAfterViewInit() {
 
     // If the user changes the sort order, reset back to the first page.
