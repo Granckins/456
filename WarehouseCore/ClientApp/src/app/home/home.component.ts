@@ -12,29 +12,7 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { ElementRef} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent, MatChipInputEvent, MatAutocomplete } from '@angular/material';
-
-export const CONDITIONS_LIST = [
-  { value: "nono", label: "Nono" },
-  { value: "is-empty", label: "Is empty" },
-  { value: "is-not-empty", label: "Is not empty" },
-  { value: "is-equal", label: "Is equal" },
-  { value: "is-not-equal", label: "Is not equal" }
-];
-
-export const CONDITIONS_FUNCTIONS = { // search method base on conditions list value
-  "is-empty": function (value, filterdValue) {
-    return value === "";
-  },
-  "is-not-empty": function (value, filterdValue) {
-    return value !== "";
-  },
-  "is-equal": function (value, filterdValue) {
-    return value == filterdValue;
-  },
-  "is-not-equal": function (value, filterdValue) {
-    return value != filterdValue;
-  }
-};
+ 
 export interface Fruit {
   name: string;
   value: string;
@@ -52,6 +30,7 @@ export interface Fruit {
     ]),
   ],
 })
+
 export class HomeComponent implements AfterViewInit {
   wars: Warehouse[] = [];
     displayedColumns: string[] = ['actions','Nomer_upakovki', 'Naimenovanie_izdeliya', 'Zavodskoj_nomer', 'Kolichestvo', 'Mestonahozhdenie_na_sklade'
@@ -59,39 +38,30 @@ export class HomeComponent implements AfterViewInit {
     'Stoimost', 'Ves_brutto', 'Ves_netto', 'Dlina', 'Shirina', 'Vysota', 'Primechanie', 'Dobavil', 'Data_ismenen'];
   exampleDatabase: DataSetService | null;
   data: EventCouch[] = [];
-
+   
   warehouse = '';
 
   resultsLength = 0; 
   isLoadingResults = true;
   isRateLimitReached = false;
-
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
-
-  dataSource = new MatTableDataSource(this.data);
-  expandedElement: EventCouch | null;
-  expandedRow: number;
-
-  isExpansionDetailRow = (i: number, row: Object) => row.hasOwnProperty('detailRow');
-
-
-
+ 
+  
   constructor(public dataService: DataSetService) {
     this.isBalanced(); 
     this.filteredFruits = this.fruitCtrl.valueChanges.pipe(
       startWith(null),
       map((fruit: string | null) => fruit ? this._filter(fruit) : this.allFruits.slice()));
   }
-  ngOnInit() {
-    this.dataSource.sort = this.sort;
-  }
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+   
   ngAfterViewInit() {
 
+     
     // If the user changes the sort order, reset back to the first page.
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
-    merge(this.sort.sortChange, this.paginator.page)
+    merge(  this.paginator.page)
       .pipe(
         startWith({}),
         switchMap(() => {
@@ -105,8 +75,7 @@ export class HomeComponent implements AfterViewInit {
           this.isLoadingResults = false;
           this.isRateLimitReached = false;
           this.resultsLength = data.total_rows;
-          this.wars = data.wars;
-  
+          this.wars = data.wars; 
           return data.rows;
         }),
         catchError(() => {
@@ -143,6 +112,7 @@ export class HomeComponent implements AfterViewInit {
   filteredFruits: Observable<string[]>;
   fruits: Fruit[] = [];
   Wars: Warehouse[] = [];
+
   allFruits: string[] = ['(', ')', 'И', 'ИЛИ', 'Все поля', 'Номер упаковки', 'Наименование изделия',
     'Заводской номер', 'Обозначение', 'Система', 'Принадлежность', 'Ответственный', 'Местонахождение',
     'Откуда', 'Куда', 'Система', 'Примечание', 'Добавил'   ];
@@ -249,7 +219,11 @@ export class HomeComponent implements AfterViewInit {
   }
   FilterString(): string {
     var str = this.GetFilterString();
-    if (str != "---") {
+    if (str != "---") { 
+
+      if (this.dataSource.paginator) {
+        this.dataSource.paginator.firstPage();
+      }
       merge(this.sort.sortChange, this.paginator.page)
         .pipe(
           startWith({}),
@@ -275,7 +249,6 @@ export class HomeComponent implements AfterViewInit {
     this.prevFilter = str;
   return str;
   }
-
   GetFilterString(): string {
     var str = "";
     var i = 0;

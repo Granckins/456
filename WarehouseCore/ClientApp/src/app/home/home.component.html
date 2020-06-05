@@ -18,15 +18,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
   <mat-accordion>
 
     <mat-expansion-panel style="   margin-top: 1%;">
@@ -64,7 +55,7 @@
                   [removable]="removable"
                   (removed)="remove(fruit)"
                   (keydown)="onMatChipKeyPress($event)"
-                  [ngStyle]=" isOkChip() && isNullChip(fruit.id)?{    'background-color': '#e0e0e0'} : {'background-color': '#dc3545'}">
+                  [ngStyle]=" isOkChip() && isNullChip(fruit.id)?{ 'background-color': '#e0e0e0'} : {'background-color': '#dc3545'}">
           <span matPrefix> {{fruit.name}}</span>
           <span matPrefix *ngIf="condition(fruit.name)">:&nbsp;</span>
           <input style="width: min-content;" *ngIf="condition(fruit.name)" matInput (change)="onChange($event, fruit.id)">
@@ -92,160 +83,139 @@
           <mat-icon>add</mat-icon>
         </button>
       </div>
-      <mat-paginator #paginator [pageSizeOptions]="[5, 10, 25, 50, 100]" [showFirstLastButtons]="true" [length]="resultsLength">
-      </mat-paginator>
+      <!--<mat-paginator #paginator [pageSizeOptions]="[5, 10, 25, 50, 100]" [showFirstLastButtons]="true" [length]="resultsLength">
+      </mat-paginator>-->
 
       <div class="example-container mat-elevation-z8">
+     
 
+        <div class="example-table-container">
 
-
-
-
-
-        <table mat-table [dataSource]="data" multiTemplateDataRows
-               class="example-table" cdkDropList #table1="cdkDropList"
-               matSort matSortActive="Номер_упаковки" matSortDisableClear matSortDirection="desc">
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef>
-              Actions
-            </th>
-            <td mat-cell *matCellDef="let element">
-              <button mat-icon-button aria-label="Редактировать">
-                <mat-icon>edite</mat-icon>
-              </button>
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="Nomer_upakovki">
-            <th mat-header-cell *matHeaderCellDef disableClear mat-sort-header="Номер_упаковки">
-              <div >
-                Номер упаковки
-              </div>
-              <div>
-                <mat-form-field>
-                  <input matInput class="form-field" [formControl]="Nomer_upakovki">
-                </mat-form-field>
-              </div>
-            </th>
-
-            <td mat-cell *matCellDef="let element">  {{element.Nomer_upakovki}} </td>
-          </ng-container>
-
-
-          <!-- Name Column -->
-          <ng-container matColumnDef="Naimenovanie_izdeliya">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header="Наименование_изделия"><div><span>Наименование изделия</span></div> </th>
-            <td mat-cell *matCellDef="let element"> {{element.Naimenovanie_izdeliya}} </td>
-          </ng-container>
-          <!-- Name Column -->
-          <ng-container matColumnDef="Zavodskoj_nomer">
-            <th class="rotate" mat-header-cell mat-sort-header="Заводской_номер" *matHeaderCellDef> <div><span>Заводской номер</span></div> </th>
-            <td mat-cell *matCellDef="let element"> {{element.Zavodskoj_nomer}} </td>
-          </ng-container>
-          <ng-container matColumnDef="Kolichestvo">
-            <th class="rotate" mat-header-cell mat-sort-header="Количество" *matHeaderCellDef> <div><span>Количество </span></div></th>
-            <td mat-cell *matCellDef="let element"> {{element.Kolichestvo}} </td>
-          </ng-container>
-          <ng-container matColumnDef="Mestonahozhdenie_na_sklade">
-            <th class="rotate" mat-header-cell *matHeaderCellDef mat-sort-header="Местонахождение_на_складе"> <div><span>Местонахождение</span></div> </th>
-            <td mat-cell *matCellDef="let element"> {{element.Mestonahozhdenie_na_sklade}} </td>
-          </ng-container>
-          <ng-container matColumnDef="Oboznachenie">
-            <th class="rotate" mat-header-cell *matHeaderCellDef><div><span> Обозначение</span></div> </th>
-            <td mat-cell *matCellDef="let element"> {{element.Oboznachenie}} </td>
-          </ng-container>
-          <ng-container matColumnDef="Sistema">
-            <th class="rotate" mat-header-cell *matHeaderCellDef> <div><span>Система</span></div> </th>
-            <td mat-cell *matCellDef="let element"> {{element.Sistema}} </td>
-          </ng-container>
-          <ng-container matColumnDef="Otvetstvennyj">
-            <th class="rotate" mat-header-cell *matHeaderCellDef><div><span> Ответственный</span></div> </th>
-            <td mat-cell *matCellDef="let element"> {{element.Otvetstvennyj}} </td>
-          </ng-container>
-          <ng-container matColumnDef="Prinadlezhnost">
-            <th class="rotate" mat-header-cell *matHeaderCellDef><div><span>Принадлежность </span></div></th>
-            <td mat-cell *matCellDef="let element"> {{element.Prinadlezhnost}} </td>
-          </ng-container>
-          <ng-container matColumnDef="Data_priyoma">
-            <th class="rotate" mat-header-cell mat-sort-header="Дата_приема" *matHeaderCellDef> <div><span>Дата приема </span></div></th>
-            <td mat-cell *matCellDef="let element"> {{element.Data_priyoma | date: 'dd.MM.yyyy'}} </td>
-          </ng-container>
-          <ng-container matColumnDef="Otkuda">
-            <th class="rotate" mat-header-cell *matHeaderCellDef> <div><span>Откуда</span></div> </th>
-            <td mat-cell *matCellDef="let element"> {{element.Otkuda}} </td>
-          </ng-container>
-          <ng-container matColumnDef="Data_vydachi">
-            <th class="rotate" mat-header-cell *matHeaderCellDef> <div><span>Дата выдачи</span></div> </th>
-            <td mat-cell *matCellDef="let element"> {{element.Data_vydachi | date: 'dd.MM.yyyy'}} </td>
-          </ng-container>
-          <ng-container matColumnDef="Kuda">
-            <th class="rotate" mat-header-cell *matHeaderCellDef> <div><span>Куда</span></div> </th>
-            <td mat-cell *matCellDef="let element"> {{element.Kuda}} </td>
-          </ng-container>
-          <ng-container matColumnDef="Nomer_plomby">
-            <th class="rotate" mat-header-cell *matHeaderCellDef> <div><span>Номер пломбы </span></div></th>
-            <td mat-cell *matCellDef="let element"> {{element.Nomer_plomby}} </td>
-          </ng-container>
-          <ng-container matColumnDef="Stoimost">
-            <th class="rotate" mat-header-cell *matHeaderCellDef><div><span> Стоимость</span></div> </th>
-            <td mat-cell *matCellDef="let element"> {{element.Stoimost}} </td>
-          </ng-container>
-          <ng-container matColumnDef="Ves_brutto">
-            <th class="rotate" mat-header-cell *matHeaderCellDef> <div><span>Вес брутто </span></div></th>
-            <td mat-cell *matCellDef="let element"> {{element.Ves_brutto}} </td>
-          </ng-container>
-          <ng-container matColumnDef="Ves_netto">
-            <th class="rotate" mat-header-cell *matHeaderCellDef><div><span>Вес нетто </span></div></th>
-            <td mat-cell *matCellDef="let element"> {{element.Ves_netto}} </td>
-          </ng-container>
-          <ng-container matColumnDef="Dlina">
-            <th class="rotate" mat-header-cell *matHeaderCellDef> <div><span>Длина </span></div></th>
-            <td mat-cell *matCellDef="let element"> {{element.Dlina}} </td>
-          </ng-container>
-          <ng-container matColumnDef="Shirina">
-            <th class="rotate" mat-header-cell *matHeaderCellDef> <div><span>Ширина</span></div> </th>
-            <td mat-cell *matCellDef="let element"> {{element.Shirina}} </td>
-          </ng-container>
-          <ng-container matColumnDef="Vysota">
-            <th class="rotate" mat-header-cell *matHeaderCellDef> <div><span>Высота</span></div> </th>
-            <td mat-cell *matCellDef="let element"> {{element.Vysota}} </td>
-          </ng-container>
-          <ng-container matColumnDef="Primechanie">
-            <th class="rotate" mat-header-cell *matHeaderCellDef> <div><span>Примечание</span></div> </th>
-            <td mat-cell *matCellDef="let element"> {{element.Primechanie}} </td>
-          </ng-container>
-          <ng-container matColumnDef="Dobavil">
-            <th class="rotate" mat-header-cell *matHeaderCellDef> <div><span>Добавил </span></div></th>
-            <td mat-cell *matCellDef="let element"> {{element.Dobavil}} </td>
-          </ng-container>
-          <ng-container matColumnDef="Data_ismenen">
-            <th class="rotate" mat-header-cell *matHeaderCellDef><div><span> Дата изменения</span></div></th>
-            <td mat-cell *matCellDef="let element"> {{element.Data_ismenen  | date: 'dd.MM.yyyy'}} </td>
-          </ng-container>
-
-          <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
-          <ng-container matColumnDef="expandedDetail">
-            <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
-              <div class="example-element-detail"
-                   [@detailExpand]="element.expand ? 'expanded' : 'collapsed'">
-
-                <div class="example-element-description">
-                  {{element.Naimenovanie_izdeliya}}
+          <table mat-table [dataSource]="data" class="example-table"
+                 matSort matSortActive="created" matSortDisableClear matSortDirection="desc">
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef>
+                Actions
+              </th>
+              <td mat-cell *matCellDef="let element">
+                <button mat-icon-button aria-label="Редактировать">
+                  <mat-icon>edite</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="Nomer_upakovki">
+              <th mat-header-cell *matHeaderCellDef disableClear mat-sort-header="Номер_упаковки">
+                <div>
+                  Номер упаковки
                 </div>
-              </div>
-            </td>
-          </ng-container>
-          <ng-container>
-          </ng-container>
-          <tr mat-header-row matHeaderRowDef="displayedColumns; sticky: true"></tr>
-          <tr mat-row *matRowDef="let element; columns: displayedColumns;"
-              class="example-element-row"
-              [class.example-expanded-row]="expandedElement === element"
-              (click)="expandRow(element)"></tr>
-          <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+                <div>
+                  <mat-form-field>
+                    <input matInput class="form-field" [formControl]="Nomer_upakovki">
+                  </mat-form-field>
+                </div>
+              </th>
 
-        </table>
+              <td mat-cell *matCellDef="let element">  {{element.Nomer_upakovki}} </td>
+            </ng-container>
 
 
+            <!-- Name Column -->
+            <ng-container matColumnDef="Naimenovanie_izdeliya">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header="Наименование_изделия"><div><span>Наименование изделия</span></div> </th>
+              <td mat-cell *matCellDef="let element"> {{element.Naimenovanie_izdeliya}} </td>
+            </ng-container>
+            <!-- Name Column -->
+            <ng-container matColumnDef="Zavodskoj_nomer">
+              <th class="rotate" mat-header-cell mat-sort-header="Заводской_номер" *matHeaderCellDef> <div><span>Заводской номер</span></div> </th>
+              <td mat-cell *matCellDef="let element"> {{element.Zavodskoj_nomer}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Kolichestvo">
+              <th class="rotate" mat-header-cell mat-sort-header="Количество" *matHeaderCellDef> <div><span>Количество </span></div></th>
+              <td mat-cell *matCellDef="let element"> {{element.Kolichestvo}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Mestonahozhdenie_na_sklade">
+              <th class="rotate" mat-header-cell *matHeaderCellDef mat-sort-header="Местонахождение_на_складе"> <div><span>Местонахождение</span></div> </th>
+              <td mat-cell *matCellDef="let element"> {{element.Mestonahozhdenie_na_sklade}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Oboznachenie">
+              <th class="rotate" mat-header-cell *matHeaderCellDef><div><span> Обозначение</span></div> </th>
+              <td mat-cell *matCellDef="let element"> {{element.Oboznachenie}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Sistema">
+              <th class="rotate" mat-header-cell *matHeaderCellDef> <div><span>Система</span></div> </th>
+              <td mat-cell *matCellDef="let element"> {{element.Sistema}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Otvetstvennyj">
+              <th class="rotate" mat-header-cell *matHeaderCellDef><div><span> Ответственный</span></div> </th>
+              <td mat-cell *matCellDef="let element"> {{element.Otvetstvennyj}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Prinadlezhnost">
+              <th class="rotate" mat-header-cell *matHeaderCellDef><div><span>Принадлежность </span></div></th>
+              <td mat-cell *matCellDef="let element"> {{element.Prinadlezhnost}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Data_priyoma">
+              <th class="rotate" mat-header-cell mat-sort-header="Дата_приема" *matHeaderCellDef> <div><span>Дата приема </span></div></th>
+              <td mat-cell *matCellDef="let element"> {{element.Data_priyoma | date: 'dd.MM.yyyy'}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Otkuda">
+              <th class="rotate" mat-header-cell *matHeaderCellDef> <div><span>Откуда</span></div> </th>
+              <td mat-cell *matCellDef="let element"> {{element.Otkuda}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Data_vydachi">
+              <th class="rotate" mat-header-cell *matHeaderCellDef> <div><span>Дата выдачи</span></div> </th>
+              <td mat-cell *matCellDef="let element"> {{element.Data_vydachi | date: 'dd.MM.yyyy'}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Kuda">
+              <th class="rotate" mat-header-cell *matHeaderCellDef> <div><span>Куда</span></div> </th>
+              <td mat-cell *matCellDef="let element"> {{element.Kuda}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Nomer_plomby">
+              <th class="rotate" mat-header-cell *matHeaderCellDef> <div><span>Номер пломбы </span></div></th>
+              <td mat-cell *matCellDef="let element"> {{element.Nomer_plomby}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Stoimost">
+              <th class="rotate" mat-header-cell *matHeaderCellDef><div><span> Стоимость</span></div> </th>
+              <td mat-cell *matCellDef="let element"> {{element.Stoimost}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Ves_brutto">
+              <th class="rotate" mat-header-cell *matHeaderCellDef> <div><span>Вес брутто </span></div></th>
+              <td mat-cell *matCellDef="let element"> {{element.Ves_brutto}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Ves_netto">
+              <th class="rotate" mat-header-cell *matHeaderCellDef><div><span>Вес нетто </span></div></th>
+              <td mat-cell *matCellDef="let element"> {{element.Ves_netto}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Dlina">
+              <th class="rotate" mat-header-cell *matHeaderCellDef> <div><span>Длина </span></div></th>
+              <td mat-cell *matCellDef="let element"> {{element.Dlina}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Shirina">
+              <th class="rotate" mat-header-cell *matHeaderCellDef> <div><span>Ширина</span></div> </th>
+              <td mat-cell *matCellDef="let element"> {{element.Shirina}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Vysota">
+              <th class="rotate" mat-header-cell *matHeaderCellDef> <div><span>Высота</span></div> </th>
+              <td mat-cell *matCellDef="let element"> {{element.Vysota}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Primechanie">
+              <th class="rotate" mat-header-cell *matHeaderCellDef> <div><span>Примечание</span></div> </th>
+              <td mat-cell *matCellDef="let element"> {{element.Primechanie}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Dobavil">
+              <th class="rotate" mat-header-cell *matHeaderCellDef> <div><span>Добавил </span></div></th>
+              <td mat-cell *matCellDef="let element"> {{element.Dobavil}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Data_ismenen">
+              <th class="rotate" mat-header-cell *matHeaderCellDef><div><span> Дата изменения</span></div></th>
+              <td mat-cell *matCellDef="let element"> {{element.Data_ismenen  | date: 'dd.MM.yyyy'}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </div>
+
+        <mat-paginator [length]="resultsLength" [pageSize]="30"></mat-paginator>
       </div>
 
     </mat-expansion-panel>
