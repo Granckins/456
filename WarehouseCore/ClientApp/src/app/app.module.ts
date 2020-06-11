@@ -6,7 +6,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router'; 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
- 
+import { DataSource, CdkTableModule } from '@angular/cdk/table';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { TableFilteringExample } from './filter-template/filter-template.component';
 import { HomeComponent } from './home/home.component';
@@ -55,7 +55,7 @@ import {
   MatPaginatorIntl,
   MatTabsModule,
   MatToolbarModule,
-  MatTooltipModule,
+  MatTooltipModule,  
   MatTreeModule,
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -84,13 +84,14 @@ import { AuthenticationService } from './Services/authentication.service';
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
+    MatTableModule, CdkTableModule,
     BrowserAnimationsModule,
     NoopAnimationsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
     MatAutocompleteModule,
     MatBadgeModule,
-    DragDropModule,
+    DragDropModule, 
     MatBottomSheetModule,
     MatButtonModule,
     MatButtonToggleModule,

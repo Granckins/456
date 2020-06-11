@@ -71,122 +71,6 @@ namespace Warehouse.Core.Repositories
 
 
 
-            //var user = new User();
-            //var lucene1 = new LuceneRequest<EventCouch>();
-            //lucene1.rows = new List<Row<EventCouch>>();
-
-            //var page = 1;
-            //var limit = 20;
-            //var skip = (page - 1) * limit;
-            //var url = "http://localhost:5984/_fti/local/events/_design/searchdocuments/by_fields?q=archive:false" + "&skip=" + skip + "&limit=" + limit;
-
-            //Task<string> task = HTTP_GET(url);
-            //task.Wait();
-            //var res = task.Result;
-
-            //var lucene11 = JsonConvert.DeserializeObject<LuceneRequest<EventWar>>(res);
-
-            //foreach (var l in lucene11.rows)
-            //{
-
-            //    EventCouch ev = new EventCouch();
-            //    ev = EventManager.ConvertEventWarToEventCouchParent(l.fields);
-
-
-            //    lucene1.rows.Add(new Row<EventCouch>() { id = l.id, fields = ev });
-            //}
-            //var total_rows = lucene11.total_rows;
-            //int pages = total_rows / limit;
-            //if (total_rows % limit > 0)
-            //    pages++;
-
-            //CouchRequest<EventCouch> list = new CouchRequest<EventCouch>();
-
-            //for (page = 1; page <= pages; page++)
-            //{
-            //    skip = (page - 1) * limit;
-            //    url = "http://localhost:5984/_fti/local/events/_design/searchdocuments/by_fields?q=archive:false" + "&skip=" + skip + "&limit=" + limit;
-
-            //    task = HTTP_GET(url);
-            //    task.Wait();
-            //    res = task.Result;
-
-            //    lucene11 = JsonConvert.DeserializeObject<LuceneRequest<EventWar>>(res);
-            //    lucene1 = new LuceneRequest<EventCouch>();
-            //    lucene1.rows = new List<Row<EventCouch>>();
-            //    foreach (var l in lucene11.rows)
-            //    {
-
-            //        EventCouch ev = new EventCouch();
-            //        ev = EventManager.ConvertEventWarToEventCouchParent(l.fields);
-
-
-            //        lucene1.rows.Add(new Row<EventCouch>() { id = l.id, fields = ev });
-            //    }
-            //    list = new CouchRequest<EventCouch>();
-
-
-            //    foreach (var r in lucene1.rows)
-            //    {
-            //        list.rows.Add(r.fields);
-            //        list.rows.Last()._id = r.id;
-
-            //    }
-
-            //    foreach (var r in list.rows)
-            //    {
-            //        r.warehouse = "6ded85b9bca49078e3d47e1508000796";
-
-
-            //        var json = JsonConvert.SerializeObject(r);
-            //        var request = (HttpWebRequest)WebRequest.Create("http://localhost:5984/events/" + r._id);
-            //        if (r._id== "17161aa206e6b4c191700436a0008721")
-            //{
-
-            //}
-            //        ServicePointManager.DefaultConnectionLimit = 1000;
-            //        request.Credentials = new NetworkCredential("admin", "root");
-            //        request.Method = "PUT";
-            //        request.ContentType = "application/json";
-            //        request.KeepAlive = false;
-            //        using (var streamWriter = new StreamWriter(request.GetRequestStream()))
-            //        {
-
-
-            //            var o = (Newtonsoft.Json.Linq.JObject)JsonConvert.DeserializeObject(json);
-
-
-            //            var json1 = JsonConvert.SerializeObject(o);
-
-            //            streamWriter.Write(json1);
-
-            //        }
-            //        try
-            //        {
-            //            var httpResponse = (HttpWebResponse)request.GetResponse();
-            //            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-            //            {
-            //                var responseText = streamReader.ReadToEnd();
-
-            //                var response = JsonConvert.DeserializeObject<ResponseCouch>(responseText);
-
-            //            }
-            //        }
-            //        catch (Exception e)
-            //        {
-
-            //        }
-
-            //    }
-
-
-
-
-
-
-            //}
-
-
 
 
 
@@ -270,16 +154,16 @@ namespace Warehouse.Core.Repositories
                     if (sort== "Номер_упаковки" || sort == "Количество")
                     {
                          if (order!="desc")
-                         sort1 += "/" +sort+ "<int>";
+                         sort1 += "\"/\"" +sort+ "<int>";
                          else
-                            sort1 += "\\" +sort + "<int>";
+                            sort1 += "\"\\\"" + sort + "<int>";
                     }
             else
             {
                 if (order != "desc")
-                      sort1 += "/" + sort;
+                      sort1 += "\"/\"" + sort;
                     else
-                    sort1 += "\\" +sort;
+                    sort1 += "\"\\\"" + sort;
             }
 
             if (warehouse == null||warehouse=="")

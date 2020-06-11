@@ -145,5 +145,8 @@
       }
     }
   },
-  "defaultProject": "WarehouseCore"
+  "defaultProject": "WarehouseCore",
+  "cli": {
+    "analytics": false
+  }
 }
